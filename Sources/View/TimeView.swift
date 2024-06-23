@@ -20,6 +20,7 @@ struct TimeView: View {
             ForEach(hourArray, id: \.self) { hour in
                 ZStack(alignment: .bottom) {
                     Text(hour)
+                        .frame(height: 21)
                         .background(Color.green)
                         .padding(.bottom, Constant.timeSpacing)
                     Rectangle()

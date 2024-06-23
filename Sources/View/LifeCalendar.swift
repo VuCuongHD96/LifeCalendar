@@ -8,19 +8,24 @@ struct LifeCalendar: View {
     @State private var hourArray: [String] = []
     
     var body: some View {
-        // 1. Time view
         ScrollView {
-            timeView
+            HStack(alignment: .top) {
+                timeView
+                dashView
+                    .padding(.top, 10)
+            }
         }
-        // 2. Line View
-        // 3. Task View
+        .onAppear {
+            hourArray = TimeManager.gethourArray()
+        }
     }
     
     private var timeView: some View {
         TimeView(hourArray: hourArray)
-            .onAppear {
-                hourArray = TimeManager.gethourArray()
-            }
+    }
+    
+    private var dashView: some View {
+        DashView(hourArray: hourArray)
     }
 }
 
