@@ -10,9 +10,11 @@ struct LifeCalendar: View {
     var body: some View {
         ScrollView {
             HStack(alignment: .top) {
-                timeView
-                dashView
-                    .padding(.top, 10)
+                timeArrayView
+                dashArrayView
+                    .overlay {
+                        TaskView()
+                    }
             }
         }
         .onAppear {
@@ -20,12 +22,12 @@ struct LifeCalendar: View {
         }
     }
     
-    private var timeView: some View {
-        TimeView(hourArray: hourArray)
+    private var timeArrayView: some View {
+        TimeArrayView(hourArray: hourArray)
     }
     
-    private var dashView: some View {
-        DashView(hourArray: hourArray)
+    private var dashArrayView: some View {
+        DashArrayView(hourArray: hourArray)
     }
 }
 
