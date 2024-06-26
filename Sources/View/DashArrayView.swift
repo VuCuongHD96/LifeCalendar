@@ -1,5 +1,5 @@
 //
-//  DashView.swift
+//  DashArrayView.swift
 //  
 //
 //  Created by Work on 24/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DashView: View {
+struct DashArrayView: View {
     
     private struct Constant {
         static let timeSpacing = CGFloat(TimeManager.hourSpacing)
@@ -19,21 +19,20 @@ struct DashView: View {
         VStack(spacing: 0) {
             ForEach(hourArray, id: \.self) { _ in
                 VStack(spacing: 0) {
-                    Line()
-                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
-                        .foregroundColor(.blue)
-                        .frame(height: 1)
+                    LineView()
                     Rectangle()
                         .fill(Color.blue)
                         .frame(width: 10, height: Constant.timeSpacing + 20)
                 }
             }
+            LineView()
         }
     }
+
 }
 
 #Preview {
     ScrollView {
-        DashView(hourArray: TimeManager.gethourArray())
+        DashArrayView(hourArray: TimeManager.gethourArray())
     }
 }
