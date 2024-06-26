@@ -7,9 +7,15 @@
 
 import SwiftUI
 
-struct TaskViewData: Identifiable {
-    let id = UUID.init()
+public struct TaskViewData: Identifiable {
+    public let id = UUID.init()
     let name: String
-    let start: Int
-    let end: Int
+    var start: Int
+    var end: Int
+    
+    public  init(name: String, start: Int, end: Int) {
+        self.name = name
+        self.start = start
+        self.end = end
+    }
 }
