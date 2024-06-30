@@ -1,5 +1,5 @@
 //
-//  TaskViewData.swift
+//  EventViewData.swift
 //
 //
 //  Created by Work on 25/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct TaskViewData: Identifiable {
+public struct EventViewData: Identifiable {
     public let id = UUID.init()
     let name: String
     var start: Int
