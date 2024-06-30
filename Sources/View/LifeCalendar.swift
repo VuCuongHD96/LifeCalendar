@@ -3,16 +3,22 @@
 
 import SwiftUI
 
-struct LifeCalendar: View {
+public struct LifeCalendar: View {
     
     @State private var hourArray: [String] = []
     @State private var groupedTasks: [GroupTaskViewData] = []
     
-    var body: some View {
+    let taskArray: [TaskViewData]
+    
+    public init(taskArray: [TaskViewData]) {
+        self.taskArray = taskArray
+    }
+
+    public var body: some View {
         ScrollView {
             HStack(alignment: .top) {
-                timeArrayView
-                dashArrayView
+                TimeArrayView(hourArray: hourArray)
+                DashArrayView(hourArray: hourArray)
                     .overlay(alignment: .top) {
                         taskArrayView
                     }
@@ -21,16 +27,8 @@ struct LifeCalendar: View {
         }
         .onAppear {
             hourArray = TimeManager.gethourArray()
-            groupedTasks = TaskManager.groupTask()
+            groupedTasks = TaskManager.groupTask(taskArray: taskArray)
         }
-    }
-    
-    private var timeArrayView: some View {
-        TimeArrayView(hourArray: hourArray)
-    }
-    
-    private var dashArrayView: some View {
-        DashArrayView(hourArray: hourArray)
     }
     
     private var taskArrayView: some View {
@@ -47,5 +45,12 @@ struct LifeCalendar: View {
 }
 
 #Preview {
-    LifeCalendar()
+    
+    let task1 = TaskViewData(name: "task1", start: 17, end: 20)
+    let task2 = TaskViewData(name: "task2", start: 19, end: 23)
+    let task3 = TaskViewData(name: "task3", start: 1, end: 2)
+    let task4 = TaskViewData(name: "task4", start: 2, end: 3)
+    let taskArray = [task1, task2, task3, task4]
+    
+    return LifeCalendar(taskArray: taskArray)
 }
