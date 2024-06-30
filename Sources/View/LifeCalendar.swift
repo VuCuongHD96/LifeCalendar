@@ -6,12 +6,12 @@ import SwiftUI
 public struct LifeCalendar: View {
     
     @State private var hourArray: [String] = []
-    @State private var groupedTasks: [GroupTaskViewData] = []
+    @State private var groupedEvents: [GroupEventViewData] = []
     
-    let taskArray: [TaskViewData]
+    let eventArray: [EventViewData]
     
-    public init(taskArray: [TaskViewData]) {
-        self.taskArray = taskArray
+    public init(eventArray: [EventViewData]) {
+        self.eventArray = eventArray
     }
 
     public var body: some View {
@@ -27,15 +27,15 @@ public struct LifeCalendar: View {
         }
         .onAppear {
             hourArray = TimeManager.gethourArray()
-            groupedTasks = TaskManager.groupTask(taskArray: taskArray)
+            groupedEvents = EventManager.groupEvent(eventArray: eventArray)
         }
     }
     
     private var taskArrayView: some View {
         ZStack(alignment: .top) {
-            ForEach(groupedTasks, id: \.id) { group in
+            ForEach(groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
-                    ForEach(group.taskArray) { task in
+                    ForEach(group.eventArray) { task in
                         TaskView(task: task)
                     }
                 }
@@ -46,11 +46,11 @@ public struct LifeCalendar: View {
 
 #Preview {
     
-    let task1 = TaskViewData(name: "task1", start: 17, end: 20)
-    let task2 = TaskViewData(name: "task2", start: 19, end: 23)
-    let task3 = TaskViewData(name: "task3", start: 1, end: 2)
-    let task4 = TaskViewData(name: "task4", start: 2, end: 3)
-    let taskArray = [task1, task2, task3, task4]
+    let event1 = EventViewData(name: "task1", start: 17, end: 20)
+    let event2 = EventViewData(name: "task2", start: 19, end: 23)
+    let event3 = EventViewData(name: "task3", start: 1, end: 2)
+    let event4 = EventViewData(name: "task4", start: 2, end: 3)
+    let eventArray = [event1, event2, event3, event4]
     
-    return LifeCalendar(taskArray: taskArray)
+    return LifeCalendar(eventArray: eventArray)
 }

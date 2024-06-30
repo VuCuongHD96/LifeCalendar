@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TaskView: View {
     
-    let task: TaskViewData
+    let task: EventViewData
     
     var body: some View {
         let dueration = task.end - task.start - 1
@@ -28,6 +28,6 @@ struct TaskView: View {
 }
 
 #Preview {
-    let task = TaskViewData(name: "Task 1", start: 1, end: 3)
+    let task = EventViewData(name: "Task 1", start: 1, end: 3)
     return TaskView(task: task)
 }
