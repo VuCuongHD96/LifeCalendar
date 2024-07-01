@@ -15,10 +15,13 @@ struct EventView: View {
     
     let event: EventViewData
     @State private var selected = false
+    @State private var eventViewPadding = CGSize.zero
+    @State private var slideViewPadding = CGSize.zero
     
     var body: some View {
         let dueration = event.end - event.start - 1
         eventPreview(dueration: dueration, color: Color.blue.opacity(0.5))
+            .padding(.top, eventViewPadding.height)
             .gesture(
                 LongPressGesture()
                     .onEnded { _ in
@@ -48,6 +51,17 @@ struct EventView: View {
     
     private func slideView(dueration: Int) -> some View {
         eventPreview(dueration: dueration, color: Color.blue)
+            .padding(.top, slideViewPadding.height)
+            .gesture(
+                DragGesture(minimumDistance: 0, coordinateSpace: .global)
+                    .onChanged { value in
+                        slideViewPadding.height = value.translation.height + eventViewPadding.height
+                    }
+                    .onEnded { value in
+                        eventViewPadding.height = slideViewPadding.height
+                        dump(value)
+                    }
+            )
     }
 }
 
