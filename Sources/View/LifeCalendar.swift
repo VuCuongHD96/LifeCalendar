@@ -20,7 +20,7 @@ public struct LifeCalendar: View {
                 TimeArrayView(hourArray: hourArray)
                 DashArrayView(hourArray: hourArray)
                     .overlay(alignment: .top) {
-                        taskArrayView
+                        eventArrayView
                     }
                     .padding(.top, 10)
             }
@@ -31,12 +31,12 @@ public struct LifeCalendar: View {
         }
     }
     
-    private var taskArrayView: some View {
+    private var eventArrayView: some View {
         ZStack(alignment: .top) {
             ForEach(groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
-                    ForEach(group.eventArray) { task in
-                        TaskView(task: task)
+                    ForEach(group.eventArray) { event in
+                        EventView(event: event)
                     }
                 }
             }
@@ -46,10 +46,10 @@ public struct LifeCalendar: View {
 
 #Preview {
     
-    let event1 = EventViewData(name: "task1", start: 17, end: 20)
-    let event2 = EventViewData(name: "task2", start: 19, end: 23)
-    let event3 = EventViewData(name: "task3", start: 1, end: 2)
-    let event4 = EventViewData(name: "task4", start: 2, end: 3)
+    let event1 = EventViewData(name: "event1", start: 17, end: 20)
+    let event2 = EventViewData(name: "event2", start: 19, end: 23)
+    let event3 = EventViewData(name: "event3", start: 1, end: 2)
+    let event4 = EventViewData(name: "event4", start: 2, end: 3)
     let eventArray = [event1, event2, event3, event4]
     
     return LifeCalendar(eventArray: eventArray)
