@@ -1,5 +1,5 @@
 //
-//  TimeArrayView.swift
+//  TimeListView.swift
 //
 //
 //  Created by Work on 23/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TimeArrayView: View {
+struct TimeListView: View {
     
     private struct Constant {
         static let timeSpacing = CGFloat(TimeManager.hourSpacing)
@@ -39,6 +39,6 @@ struct TimeArrayView: View {
 
 #Preview {
     ScrollView {
-        TimeArrayView(hourArray: TimeManager.gethourArray())
+        TimeListView(hourArray: TimeManager.gethourArray())
     }
 }

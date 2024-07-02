@@ -6,8 +6,15 @@
 //
 
 import SwiftUI
+import Observation
 
-public struct EventViewData: Identifiable, Equatable {
+@Observable
+public class EventViewData: Identifiable, Equatable {
+    
+    public static func == (lhs: EventViewData, rhs: EventViewData) -> Bool {
+        lhs.id == rhs.id
+    }
+    
     public let id = UUID.init()
     let name: String
     var start: Int
@@ -19,7 +26,7 @@ public struct EventViewData: Identifiable, Equatable {
         self.end = end
     }
     
-    init() {
+    convenience init() {
         self.init(name: "", start: 0, end: 0)
     }
 }

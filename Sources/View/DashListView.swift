@@ -1,5 +1,5 @@
 //
-//  DashArrayView.swift
+//  DashListView.swift
 //  
 //
 //  Created by Work on 24/6/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DashArrayView: View {
+struct DashListView: View {
     
     private struct Constant {
         static let timeSpacing = CGFloat(TimeManager.hourSpacing)
@@ -33,6 +33,6 @@ struct DashArrayView: View {
 
 #Preview {
     ScrollView {
-        DashArrayView(hourArray: TimeManager.gethourArray())
+        DashListView(hourArray: TimeManager.gethourArray())
     }
 }

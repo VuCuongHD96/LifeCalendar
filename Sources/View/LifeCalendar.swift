@@ -8,19 +8,19 @@ public struct LifeCalendar: View {
     @State private var hourArray: [String] = []
     @State private var groupedEvents: [GroupEventViewData] = []
     
-    let eventArray: [EventViewData]
+    @Binding var eventArray: [EventViewData]
     
-    public init(eventArray: [EventViewData]) {
-        self.eventArray = eventArray
+    public init(eventArray: Binding<[EventViewData]>) {
+        _eventArray = eventArray
     }
     
     public var body: some View {
         ScrollView {
             HStack(alignment: .top) {
-                TimeArrayView(hourArray: hourArray)
-                DashArrayView(hourArray: hourArray)
+                TimeListView(hourArray: hourArray)
+                DashListView(hourArray: hourArray)
                     .overlay(alignment: .top) {
-                        eventArrayView
+                        eventListView
                     }
                     .padding(.top, 10)
             }
@@ -31,9 +31,9 @@ public struct LifeCalendar: View {
         }
     }
     
-    private var eventArrayView: some View {
+    private var eventListView: some View {
         ZStack(alignment: .top) {
-            ForEach(groupedEvents, id: \.id) { group in
+            ForEach($groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
                     ForEach(group.eventArray) { event in
                         EventView(event: event)
@@ -49,10 +49,13 @@ public struct LifeCalendar: View {
     let event2 = EventViewData(name: "event2", start: 19, end: 23)
     let event3 = EventViewData(name: "event3", start: 1, end: 2)
     let event4 = EventViewData(name: "event4", start: 2, end: 3)
-    let eventArray = [event1, event2, event3, event4]
+    @State var eventArray = [event1, event2, event3, event4]
     
-    return LifeCalendar(eventArray: eventArray)
+    return LifeCalendar(eventArray: $eventArray)
         .onEventSelected {
-            print("--- debug --- event = ", $0)
+            print("--- debug --- onEventSelected = ", $0.name)
+        }
+        .onEventChanged {
+            print("--- debug --- onEventChanged = ", $0.name)
         }
 }

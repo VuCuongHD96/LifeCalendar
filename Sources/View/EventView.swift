@@ -13,10 +13,12 @@ struct EventView: View {
         static let hourUnit: CGFloat = 80
     }
     
-    let event: EventViewData
+    @Binding var event: EventViewData
     @State private var selected = false
     @State private var eventViewPadding = CGSize.zero
     @State private var slideViewPadding = CGSize.zero
+    
+    @State private var eventEndChanged: EventViewData?
     
     var body: some View {
         let dueration = event.end - event.start - 1
@@ -34,6 +36,10 @@ struct EventView: View {
                 }
             }
             .modifier(EventSelectedModifier(selected: selected, event: event))
+            .modifier(EventChangeModifier(eventEndChanged: $eventEndChanged))
+            .onAppear {
+                eventEndChanged = nil
+            }
     }
     
     private func eventPreview(dueration: Int, color: Color) -> some View {
@@ -59,8 +65,13 @@ struct EventView: View {
                         slideViewPadding.height = value.translation.height + eventViewPadding.height
                     }
                     .onEnded { value in
-                        eventViewPadding.height = slideViewPadding.height
-                        dump(value)
+                        let slideChange = value.translation.height
+                        let changeHour = Int(slideChange / Constant.hourUnit)
+                        event.start += changeHour
+                        event.end += changeHour
+                        slideViewPadding.height = 0
+                        eventEndChanged = event
+                        eventEndChanged = nil
                     }
             )
     }
@@ -69,7 +80,7 @@ struct EventView: View {
 #Preview {
     let event = EventViewData(name: "Event 1", start: 1, end: 3)
     return ScrollView {
-        EventView(event: event)
+        EventView(event: .constant(event))
     }
     .background(Color.green)
 }
