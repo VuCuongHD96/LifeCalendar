@@ -13,7 +13,7 @@ public struct LifeCalendar: View {
     public init(eventArray: [EventViewData]) {
         self.eventArray = eventArray
     }
-
+    
     public var body: some View {
         ScrollView {
             HStack(alignment: .top) {
@@ -45,7 +45,6 @@ public struct LifeCalendar: View {
 }
 
 #Preview {
-    
     let event1 = EventViewData(name: "event1", start: 17, end: 20)
     let event2 = EventViewData(name: "event2", start: 19, end: 23)
     let event3 = EventViewData(name: "event3", start: 1, end: 2)
@@ -53,4 +52,7 @@ public struct LifeCalendar: View {
     let eventArray = [event1, event2, event3, event4]
     
     return LifeCalendar(eventArray: eventArray)
+        .onEventSelected {
+            print("--- debug --- event = ", $0)
+        }
 }

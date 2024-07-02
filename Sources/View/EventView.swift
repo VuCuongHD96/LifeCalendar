@@ -33,6 +33,7 @@ struct EventView: View {
                     slideView(dueration: dueration)
                 }
             }
+            .modifier(EventSelectedModifier(selected: selected, event: event))
     }
     
     private func eventPreview(dueration: Int, color: Color) -> some View {
