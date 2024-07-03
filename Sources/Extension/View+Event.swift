@@ -8,7 +8,11 @@
 import SwiftUI
 
 extension View {
-    func callBackEvent(_ event: EventViewData) -> some View {
+    func callBackEventSelected(_ event: EventViewData) -> some View {
         preference(key: EventSelectedKey.self, value: event)
+    }
+    
+    func callBackEventChanged(_ event: EventViewData) -> some View {
+        preference(key: EventChangedKey.self, value: event)
     }
 }
