@@ -9,7 +9,7 @@ import SwiftUI
 
 extension View {
     
-    public typealias CallBackEvent = (EventViewData) -> Void
+    public typealias CallBackEvent = (EventViewData?) -> Void
     
     public func onEventSelected(callBackEvent: @escaping CallBackEvent) -> some View {
         onPreferenceChange(EventSelectedKey.self) { event in

@@ -9,9 +9,13 @@ import SwiftUI
 
 struct EventSelectedModifier: ViewModifier {
     
-    let event: EventViewData
+    let event: EventViewData?
     
     func body(content: Content) -> some View {
-        content.callBackEventSelected(event)
+        if let event = event {
+            content.callBackEventSelected(event)
+        } else {
+            content
+        }
     }
 }

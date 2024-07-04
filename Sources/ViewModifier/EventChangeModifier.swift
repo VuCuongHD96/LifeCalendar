@@ -9,15 +9,14 @@ import SwiftUI
 
 struct EventChangeModifier: ViewModifier {
     
-    @Binding var eventEndChanged: EventViewData?
+    var eventEndChanged: EventViewData?
     
     func body(content: Content) -> some View {
         
-        if let event = eventEndChanged {
+        if let event = eventEndChanged, !event.id.isEmpty {
             content.callBackEventChanged(event)
         } else {
             content
         }
     }
 }
-
