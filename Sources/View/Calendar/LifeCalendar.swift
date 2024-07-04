@@ -19,17 +19,17 @@ public struct LifeCalendar: View {
     public var body: some View {
         ScrollView {
             HStack(alignment: .top) {
-                TimeArrayView(hourArray: output.hourArray)
-                DashArrayView(hourArray: output.hourArray)
+                TimeListView(hourArray: output.hourArray)
+                DashListView(hourArray: output.hourArray)
                     .overlay(alignment: .top) {
-                        eventArrayView
+                        eventListView
                     }
                     .padding(.top, 10)
             }
         }
     }
     
-    private var eventArrayView: some View {
+    private var eventListView: some View {
         ZStack(alignment: .top) {
             ForEach($output.groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
@@ -51,6 +51,9 @@ public struct LifeCalendar: View {
     
     return LifeCalendar(eventArray: eventArray)
         .onEventSelected {
-            print("--- debug --- event = ", $0)
+            print("--- debug --- onEventSelected = ", $0.name)
+        }
+        .onEventChanged {
+            print("--- debug --- onEventChanged = ", $0.name)
         }
 }

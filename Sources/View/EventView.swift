@@ -18,6 +18,8 @@ struct EventView: View {
     @State private var eventViewPadding = CGSize.zero
     @State private var slideViewPadding = CGSize.zero
     
+    @State private var eventEndChanged: EventViewData?
+    
     var body: some View {
         let dueration = event.end - event.start - 1
         eventPreview(dueration: dueration, color: Color.blue.opacity(0.5))
@@ -34,6 +36,10 @@ struct EventView: View {
                 }
             }
             .modifier(EventSelectedModifier(selected: selected, event: event))
+            .modifier(EventChangeModifier(eventEndChanged: $eventEndChanged))
+            .onAppear {
+                eventEndChanged = nil
+            }
     }
     
     private func eventPreview(dueration: Int, color: Color) -> some View {
@@ -59,8 +65,13 @@ struct EventView: View {
                         slideViewPadding.height = value.translation.height + eventViewPadding.height
                     }
                     .onEnded { value in
-                        eventViewPadding.height = slideViewPadding.height
-                        dump(value)
+                        let slideChange = value.translation.height
+                        let changeHour = Int(slideChange / Constant.hourUnit)
+                        event.start += changeHour
+                        event.end += changeHour
+                        slideViewPadding.height = 0
+                        eventEndChanged = event
+                        eventEndChanged = nil
                     }
             )
     }

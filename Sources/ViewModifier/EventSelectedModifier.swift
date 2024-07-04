@@ -14,7 +14,7 @@ struct EventSelectedModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         if selected {
-            content.callBackEvent(event)
+            content.callBackEventSelected(event)
         } else {
             content
         }
