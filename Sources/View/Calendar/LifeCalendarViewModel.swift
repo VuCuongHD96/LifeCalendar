@@ -14,8 +14,8 @@ struct LifeCalendarViewModel {
 
 extension LifeCalendarViewModel: ViewModel {
     
-    struct Input {
-        
+    class Input: ObservableObject {
+        @Published var eventSelected: EventViewData = .init()
     }
     
     class Output: ObservableObject {
@@ -35,6 +35,22 @@ extension LifeCalendarViewModel: ViewModel {
         
         Just(TimeManager.gethourArray())
             .assign(to: \.hourArray, on: output)
+            .store(in: cancelBag)
+        
+        input.$eventSelected
+            .compactMap {
+                eventArray.firstIndex(of: $0)
+            }
+            .handleEvents(receiveOutput: {
+                eventArray.forEach {
+                    $0.selected = false
+                }
+                eventArray[$0].selected = true
+            })
+            .map { _ in
+                EventManager.groupEvent(eventArray: eventArray)
+            }
+            .assign(to: \.groupedEvents, on: output)
             .store(in: cancelBag)
         
         return output

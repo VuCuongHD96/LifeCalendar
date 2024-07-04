@@ -9,14 +9,9 @@ import SwiftUI
 
 struct EventSelectedModifier: ViewModifier {
     
-    let selected: Bool
     let event: EventViewData
-
+    
     func body(content: Content) -> some View {
-        if selected {
-            content.callBackEventSelected(event)
-        } else {
-            content
-        }
+        content.callBackEventSelected(event)
     }
 }

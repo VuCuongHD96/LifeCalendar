@@ -13,29 +13,20 @@ struct EventView: View {
         static let hourUnit: CGFloat = 80
     }
     
-    @Binding var event: EventViewData
-    @State private var selected = false
+    var event: EventViewData
     @State private var eventViewPadding = CGSize.zero
     @State private var slideViewPadding = CGSize.zero
-    
     @State private var eventEndChanged: EventViewData?
     
     var body: some View {
         let dueration = event.end - event.start - 1
         eventPreview(dueration: dueration, color: Color.blue.opacity(0.5))
             .padding(.top, eventViewPadding.height)
-            .gesture(
-                LongPressGesture()
-                    .onEnded { _ in
-                        selected.toggle()
-                    }
-            )
             .overlay(alignment: .top) {
-                if selected {
+                if event.selected {
                     slideView(dueration: dueration)
                 }
             }
-            .modifier(EventSelectedModifier(selected: selected, event: event))
             .modifier(EventChangeModifier(eventEndChanged: $eventEndChanged))
             .onAppear {
                 eventEndChanged = nil
@@ -78,9 +69,9 @@ struct EventView: View {
 }
 
 #Preview {
-    let event = EventViewData(name: "Event 1", start: 1, end: 3)
+    let event = EventViewData(id: "1", name: "Event 1", start: 1, end: 3)
     return ScrollView {
-        EventView(event: .constant(event))
+        EventView(event: event)
     }
     .background(Color.green)
 }

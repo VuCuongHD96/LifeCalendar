@@ -27,14 +27,23 @@ public struct LifeCalendar: View {
                     .padding(.top, 10)
             }
         }
+        .modifier(EventSelectedModifier(event: input.eventSelected))
     }
     
     private var eventListView: some View {
         ZStack(alignment: .top) {
-            ForEach($output.groupedEvents, id: \.id) { group in
+            ForEach(output.groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
                     ForEach(group.eventArray, id: \.id) { event in
                         EventView(event: event)
+                            .gesture(
+                                LongPressGesture()
+                                    .onEnded { _ in
+                                        input.eventSelected = event
+                                        print("--- debug --- LongPressGesture event = ", event.name)
+                                    }
+                            )
+
                     }
                 }
             }
@@ -43,10 +52,10 @@ public struct LifeCalendar: View {
 }
 
 #Preview {
-    let event1 = EventViewData(name: "event1", start: 17, end: 20)
-    let event2 = EventViewData(name: "event2", start: 19, end: 23)
-    let event3 = EventViewData(name: "event3", start: 1, end: 2)
-    let event4 = EventViewData(name: "event4", start: 2, end: 3)
+    let event1 = EventViewData(id: "1", name: "event1", start: 17, end: 20)
+    let event2 = EventViewData(id: "2", name: "event2", start: 19, end: 23)
+    let event3 = EventViewData(id: "3", name: "event3", start: 1, end: 2)
+    let event4 = EventViewData(id: "4", name: "event4", start: 2, end: 3)
     let eventArray = [event1, event2, event3, event4]
     
     return LifeCalendar(eventArray: eventArray)
