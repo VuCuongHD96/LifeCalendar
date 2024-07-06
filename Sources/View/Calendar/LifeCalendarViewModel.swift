@@ -9,13 +9,14 @@ import Combine
 
 struct LifeCalendarViewModel {
     
-    let eventArray: [EventViewData]
+    var eventArray: [EventViewData]
 }
 
 extension LifeCalendarViewModel: ViewModel {
     
     class Input: ObservableObject {
         @Published var eventSelected: EventViewData = .init()
+        var eventChanged = PassthroughSubject<EventViewData, Never>()
     }
     
     class Output: ObservableObject {
@@ -52,6 +53,24 @@ extension LifeCalendarViewModel: ViewModel {
             }
             .assign(to: \.groupedEvents, on: output)
             .store(in: cancelBag)
+        
+        Publishers.CombineLatest( input.eventChanged, Just(eventArray))
+            .map { (event, eventArray) in
+                print("--- debug --- CombineLatest( input.$eventChanged, Just(eventArray))")
+                var eventArrayCopy = eventArray
+                eventArrayCopy[0] = event
+                return eventArrayCopy
+            }
+            .map { _ in
+                EventManager.groupEvent(eventArray: eventArray)
+            }
+            .assign(to: \.groupedEvents, on: output)
+            .store(in: cancelBag)
+//        input.$eventChanged
+//            .handleEvents(receiveOutput: {
+//                eventArray[0] = $0
+//            })
+//            .store(in: cancelBag)
         
         return output
     }

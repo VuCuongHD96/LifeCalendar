@@ -28,6 +28,13 @@ public struct LifeCalendar: View {
             }
         }
         .modifier(EventSelectedModifier(event: input.eventSelected))
+//        .onEventChanged {
+//            print("\n\n\n--- debug --- onEventChanged = ")
+//            print("--- debug --- name = ", $0.name)
+//            print("--- debug --- start = ", $0.start)
+//            print("--- debug --- end = ", $0.end)
+//            input.eventChanged.send($0)
+//        }
     }
     
     private var eventListView: some View {
@@ -40,10 +47,8 @@ public struct LifeCalendar: View {
                                 LongPressGesture()
                                     .onEnded { _ in
                                         input.eventSelected = event
-                                        print("--- debug --- LongPressGesture event = ", event.name)
                                     }
                             )
-
                     }
                 }
             }
