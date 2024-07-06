@@ -5,37 +5,35 @@ import SwiftUI
 
 public struct LifeCalendar: View {
     
-    @State private var hourArray: [String] = []
-    @State private var groupedEvents: [GroupEventViewData] = []
-    
-    let eventArray: [EventViewData]
+    private let input: LifeCalendarViewModel.Input
+    @ObservedObject private var output: LifeCalendarViewModel.Output
+    private let cancelBag = CancelBag()
     
     public init(eventArray: [EventViewData]) {
-        self.eventArray = eventArray
+        let viewModel = LifeCalendarViewModel(eventArray: eventArray)
+        let input = LifeCalendarViewModel.Input()
+        output = viewModel.transform(input, cancelBag: cancelBag)
+        self.input = input
     }
     
     public var body: some View {
         ScrollView {
             HStack(alignment: .top) {
-                TimeArrayView(hourArray: hourArray)
-                DashArrayView(hourArray: hourArray)
+                TimeArrayView(hourArray: output.hourArray)
+                DashArrayView(hourArray: output.hourArray)
                     .overlay(alignment: .top) {
                         eventArrayView
                     }
                     .padding(.top, 10)
             }
         }
-        .onAppear {
-            hourArray = TimeManager.gethourArray()
-            groupedEvents = EventManager.groupEvent(eventArray: eventArray)
-        }
     }
     
     private var eventArrayView: some View {
         ZStack(alignment: .top) {
-            ForEach(groupedEvents, id: \.id) { group in
+            ForEach($output.groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
-                    ForEach(group.eventArray) { event in
+                    ForEach(group.eventArray, id: \.id) { event in
                         EventView(event: event)
                     }
                 }

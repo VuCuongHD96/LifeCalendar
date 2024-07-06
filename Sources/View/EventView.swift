@@ -13,7 +13,7 @@ struct EventView: View {
         static let hourUnit: CGFloat = 80
     }
     
-    let event: EventViewData
+    @Binding var event: EventViewData
     @State private var selected = false
     @State private var eventViewPadding = CGSize.zero
     @State private var slideViewPadding = CGSize.zero
@@ -69,7 +69,7 @@ struct EventView: View {
 #Preview {
     let event = EventViewData(name: "Event 1", start: 1, end: 3)
     return ScrollView {
-        EventView(event: event)
+        EventView(event: .constant(event))
     }
     .background(Color.green)
 }
