@@ -13,18 +13,20 @@ public class EventViewData: Identifiable, Equatable {
         lhs.id == rhs.id
     }
     
-    public let id = UUID.init()
+    public let id: String
     let name: String
     var start: Int
     var end: Int
+    var selected = false
     
-    public init(name: String, start: Int, end: Int) {
+    public init(id: String, name: String, start: Int, end: Int) {
+        self.id = id
         self.name = name
         self.start = start
         self.end = end
     }
     
     convenience init() {
-        self.init(name: "", start: 0, end: 0)
+        self.init(id: "", name: "", start: 0, end: 0)
     }
 }
