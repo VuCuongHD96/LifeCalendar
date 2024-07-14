@@ -5,6 +5,10 @@ import SwiftUI
 
 public struct LifeCalendar: View {
     
+    private struct Constant {
+        static let hourHeight: CGFloat = 80
+    }
+    
     private let input: LifeCalendarViewModel.Input
     @ObservedObject private var output: LifeCalendarViewModel.Output
     private let cancelBag = CancelBag()
@@ -36,14 +40,28 @@ public struct LifeCalendar: View {
                 HStack(alignment: .top) {
                     ForEach(group.eventArray, id: \.id) { event in
                         EventView(event: event)
+                            .frame(height: CGFloat(event.dueration) * Constant.hourHeight)
+                            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : CGFloat(event.offsetHeight))
+                            .background(Color.red.opacity(event.selected ? 1 : 0))
+                            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
                             .gesture(
                                 LongPressGesture()
                                     .onEnded { _ in
                                         input.eventSelected = event
-                                        print("--- debug --- LongPressGesture event = ", event.name)
                                     }
                             )
-
+                            .gesture(
+                                DragGesture()
+                                    .onChanged { value in
+                                        let offsetHeight = Float(value.translation.height)
+                                        input.onDragging.send(offsetHeight)
+                                    }
+                                    .onEnded { value in
+                                        let offsetHeight = Float(value.translation.height)
+                                        input.onDragging.send(.zero)
+                                        input.onEndDragging.send(offsetHeight)
+                                    }
+                            )
                     }
                 }
             }

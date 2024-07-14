@@ -18,12 +18,15 @@ public class EventViewData: Identifiable, Equatable {
     var start: Int
     var end: Int
     var selected = false
+    var dueration: Int
+    var offsetHeight: Float = .zero
     
     public init(id: String, name: String, start: Int, end: Int) {
         self.id = id
         self.name = name
         self.start = start
         self.end = end
+        self.dueration = end - start
     }
     
     convenience init() {
