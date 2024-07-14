@@ -40,8 +40,8 @@ public struct LifeCalendar: View {
                 HStack(alignment: .top) {
                     ForEach(group.eventArray, id: \.id) { event in
                         EventView(event: event)
-                            .frame(height: CGFloat(event.dueration) * Constant.hourHeight)
-                            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : CGFloat(event.offsetHeight))
+                            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
+                            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
                             .background(Color.red.opacity(event.selected ? 1 : 0))
                             .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
                             .gesture(
@@ -58,7 +58,6 @@ public struct LifeCalendar: View {
                                     }
                                     .onEnded { value in
                                         let offsetHeight = Float(value.translation.height)
-                                        input.onDragging.send(.zero)
                                         input.onEndDragging.send(offsetHeight)
                                     }
                             )
