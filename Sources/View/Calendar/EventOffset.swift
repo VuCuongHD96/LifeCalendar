@@ -13,4 +13,9 @@ struct EventOffset {
     var totalOffset: Float {
         offset + lastOffset
     }
+    
+    mutating func reset() {
+        offset = 0
+        lastOffset = 0
+    }
 }
