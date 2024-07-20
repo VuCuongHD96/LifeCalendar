@@ -19,7 +19,6 @@ public class EventViewData: Identifiable, Equatable {
     var end: Int
     var selected = false
     var dueration: Int
-    var offsetHeight: Float = .zero
     
     public init(id: String, name: String, start: Int, end: Int) {
         self.id = id
