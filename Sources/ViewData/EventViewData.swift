@@ -14,9 +14,9 @@ public class EventViewData: Identifiable, Equatable {
     }
     
     public let id: String
-    let name: String
-    var start: Int
-    var end: Int
+    public let name: String
+    public var start: Int
+    public var end: Int
     var selected = false
     var dueration: Int
     

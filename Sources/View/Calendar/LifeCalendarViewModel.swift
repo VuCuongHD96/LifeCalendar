@@ -26,6 +26,9 @@ extension LifeCalendarViewModel: ViewModel {
         @Published var eventOffset: EventOffset = .init()
         @Published var eventArray = [EventViewData]()
         var eventIndexSelected: Int?
+        var eventChanged: EventViewData = .init()
+        var trackIndex = 0
+        var hourChanged = 0
     }
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
@@ -45,7 +48,7 @@ extension LifeCalendarViewModel: ViewModel {
         Just(TimeManager.gethourArray())
             .assign(to: \.hourArray, on: output)
             .store(in: cancelBag)
-
+        
         let eventIndexSelected = input.$eventSelected
             .compactMap {
                 eventArray.firstIndex(of: $0)
@@ -62,16 +65,16 @@ extension LifeCalendarViewModel: ViewModel {
                 return (previous.1, newValue)
             }
             .compactMap { $0 }
-            .sink { (oldValue, newValue) in
-                if let oldValue = oldValue {
-                    let oldEvent = output.eventArray[oldValue]
+            .sink { (oldIndex, newIndex) in
+                if let oldIndex = oldIndex {
+                    let oldEvent = output.eventArray[oldIndex]
                     oldEvent.selected = false
-                    output.eventArray[oldValue] = oldEvent
+                    output.eventArray[oldIndex] = oldEvent
                 }
-                if let newValue = newValue {
-                    let newEvent = output.eventArray[newValue]
+                if let newIndex = newIndex {
+                    let newEvent = output.eventArray[newIndex]
                     newEvent.selected = true
-                    output.eventArray[newValue] = newEvent
+                    output.eventArray[newIndex] = newEvent
                 }
             }
             .store(in: cancelBag)
@@ -88,7 +91,7 @@ extension LifeCalendarViewModel: ViewModel {
                 output.eventOffset.reset()
             }
             .store(in: cancelBag)
-
+        
         input.onEndDragging
             .sink { offset in
                 if let index = output.eventIndexSelected {
@@ -97,6 +100,10 @@ extension LifeCalendarViewModel: ViewModel {
                     eventChanged.start += hourChange
                     eventChanged.end += hourChange
                     output.eventArray[index] = eventChanged
+                    output.hourChanged = hourChange
+                    output.trackIndex += 1
+                    output.eventChanged = eventChanged
+                    print("\n--- debug --- ViewModel --- index \(output.trackIndex) --- hourChanged = ", hourChange)
                 }
             }
             .store(in: cancelBag)

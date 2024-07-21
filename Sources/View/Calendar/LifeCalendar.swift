@@ -22,6 +22,7 @@ public struct LifeCalendar: View {
     
     public var body: some View {
         ScrollView {
+            Text("Turn = \(output.trackIndex) --- event change = \(output.eventChanged.start)")
             HStack(alignment: .top) {
                 TimeListView(hourArray: output.hourArray)
                 DashListView(hourArray: output.hourArray)
@@ -32,6 +33,8 @@ public struct LifeCalendar: View {
             }
         }
         .modifier(EventSelectedModifier(event: input.eventSelected))
+        .modifier(EventChangeModifier(eventEndChanged: output.eventChanged))
+//        .modifier(HourChangeModifier(hour: output.hourChanged))
     }
     
     private var eventListView: some View {
@@ -39,32 +42,43 @@ public struct LifeCalendar: View {
             ForEach(output.groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
                     ForEach(group.eventArray, id: \.id) { event in
-                        EventView(event: event)
-                            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
-                            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
-                            .background(Color.red.opacity(event.selected ? 1 : 0))
-                            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
-                            .gesture(
-                                LongPressGesture()
-                                    .onEnded { _ in
-                                        input.eventSelected = event
-                                    }
-                            )
-                            .gesture(
-                                DragGesture()
-                                    .onChanged { value in
-                                        let offsetHeight = Float(value.translation.height)
-                                        input.onDragging.send(offsetHeight)
-                                    }
-                                    .onEnded { value in
-                                        let offsetHeight = Float(value.translation.height)
-                                        input.onEndDragging.send(offsetHeight)
-                                    }
-                            )
+                        eventItemView(event: event)
                     }
                 }
             }
         }
+    }
+    
+    private func eventItemView(event: EventViewData) -> some View {
+        EventView(event: event)
+            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
+            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
+            .background(
+                EventView(event: event)
+                    .opacity(event.selected ? 0.5 : 0)
+            )
+            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
+            .gesture(
+                LongPressGesture()
+                    .onEnded { _ in
+                        input.eventSelected = event
+                    }
+            )
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        if event.selected {
+                            let offsetHeight = Float(value.translation.height)
+                            input.onDragging.send(offsetHeight)
+                        }
+                    }
+                    .onEnded { value in
+                        if event.selected {
+                            let offsetHeight = Float(value.translation.height)
+                            input.onEndDragging.send(offsetHeight)
+                        }
+                    }
+            )
     }
 }
 
@@ -81,5 +95,8 @@ public struct LifeCalendar: View {
         }
         .onEventChanged {
             print("--- debug --- onEventChanged = ", $0.name)
+        }
+        .onHourChanged {
+            print("--- debug --- hour = ", $0)
         }
 }

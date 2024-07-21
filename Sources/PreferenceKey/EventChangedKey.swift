@@ -14,3 +14,11 @@ struct EventChangedKey: PreferenceKey {
         value = nextValue()
     }
 }
+
+struct HourChangedKey: PreferenceKey {
+    static var defaultValue: Int = 0
+
+    static func reduce(value: inout Int, nextValue: () -> Int) {
+        value = nextValue()
+    }
+}

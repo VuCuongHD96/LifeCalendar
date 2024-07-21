@@ -15,4 +15,8 @@ extension View {
     func callBackEventChanged(_ event: EventViewData) -> some View {
         preference(key: EventChangedKey.self, value: event)
     }
+    
+    func callBackHourChanged(_ hour: Int) -> some View {
+        preference(key: HourChangedKey.self, value: hour)
+    }
 }

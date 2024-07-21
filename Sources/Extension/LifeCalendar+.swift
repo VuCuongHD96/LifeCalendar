@@ -10,6 +10,7 @@ import SwiftUI
 extension View {
     
     public typealias CallBackEvent = (EventViewData) -> Void
+    public typealias CallBackHour = (Int) -> Void
     
     public func onEventSelected(callBackEvent: @escaping CallBackEvent) -> some View {
         onPreferenceChange(EventSelectedKey.self) { event in
@@ -20,6 +21,12 @@ extension View {
     public func onEventChanged(callBackEvent: @escaping CallBackEvent) -> some View {
         onPreferenceChange(EventChangedKey.self) { event in
             callBackEvent(event)
+        }
+    }
+    
+    public func onHourChanged(callBackHour: @escaping CallBackHour) -> some View {
+        onPreferenceChange(HourChangedKey.self) { hour in
+            callBackHour(hour)
         }
     }
 }
