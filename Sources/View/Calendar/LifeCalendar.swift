@@ -38,33 +38,41 @@ public struct LifeCalendar: View {
         ZStack(alignment: .top) {
             ForEach(output.groupedEvents, id: \.id) { group in
                 HStack(alignment: .top) {
-                    ForEach(group.eventArray, id: \.id) { event in
-                        EventView(event: event)
-                            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
-                            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
-                            .background(Color.red.opacity(event.selected ? 1 : 0))
-                            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
-                            .gesture(
-                                LongPressGesture()
-                                    .onEnded { _ in
-                                        input.eventSelected = event
-                                    }
-                            )
-                            .gesture(
-                                DragGesture()
-                                    .onChanged { value in
-                                        let offsetHeight = Float(value.translation.height)
-                                        input.onDragging.send(offsetHeight)
-                                    }
-                                    .onEnded { value in
-                                        let offsetHeight = Float(value.translation.height)
-                                        input.onEndDragging.send(offsetHeight)
-                                    }
-                            )
+                    ForEach(0..<group.matrixEventArray.count, id: \.self) { rowIndex in
+                        ZStack(alignment: .top) {
+                            ForEach(group.matrixEventArray[rowIndex]) { event in
+                                eventView(event: event)
+                            }
+                        }
                     }
                 }
             }
         }
+    }
+    
+    private func eventView(event: EventViewData) -> some View {
+        EventView(event: event)
+            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
+            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
+            .background(Color.red.opacity(event.selected ? 1 : 0))
+            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
+            .gesture(
+                LongPressGesture()
+                    .onEnded { _ in
+                        input.eventSelected = event
+                    }
+            )
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        let offsetHeight = Float(value.translation.height)
+                        input.onDragging.send(offsetHeight)
+                    }
+                    .onEnded { value in
+                        let offsetHeight = Float(value.translation.height)
+                        input.onEndDragging.send(offsetHeight)
+                    }
+            )
     }
 }
 
