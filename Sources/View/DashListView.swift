@@ -1,6 +1,6 @@
 //
 //  DashListView.swift
-//  
+//
 //
 //  Created by Work on 24/6/24.
 //
@@ -19,16 +19,21 @@ struct DashListView: View {
         VStack(spacing: 0) {
             ForEach(hourArray, id: \.self) { _ in
                 VStack(spacing: 0) {
-                    LineView()
+                    lineView
                     Rectangle()
                         .fill(Color.blue)
                         .frame(width: 10, height: Constant.timeSpacing + 20)
                 }
             }
-            LineView()
+            lineView
         }
     }
-
+    
+    private var lineView: some View {
+        LineView(lineWidth: 2, dash: 10)
+            .foregroundStyle(.blue)
+            .frame(height: 1)
+    }
 }
 
 #Preview {
