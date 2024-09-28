@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-struct LineView: View {
+public struct LineView: View {
     
-    var body: some View {
+    public init() { }
+    
+    public var body: some View {
         Line()
             .stroke(style: StrokeStyle(lineWidth: 2, dash: [10]))
             .foregroundColor(.blue)
