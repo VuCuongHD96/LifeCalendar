@@ -22,4 +22,10 @@ extension View {
             callBackEvent(event)
         }
     }
+    
+    public func onEventChanged2(callHour: @escaping (Int) -> Void) -> some View {
+        onPreferenceChange(EventChangedKey2.self) { hour in
+            callHour(hour)
+        }
+    }
 }

@@ -21,3 +21,18 @@ struct EventChangeModifier: ViewModifier {
     }
 }
 
+
+
+struct EventChangeModifier2: ViewModifier {
+    
+    let hourChange: Int?
+    
+    func body(content: Content) -> some View {
+        
+        if let hourChange = hourChange {
+            content.callBackEventChanged2(hourChange)
+        } else {
+            content
+        }
+    }
+}

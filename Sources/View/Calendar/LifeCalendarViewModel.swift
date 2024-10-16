@@ -26,6 +26,7 @@ extension LifeCalendarViewModel: ViewModel {
         @Published var eventOffset: EventOffset = .init()
         @Published var eventArray = [EventViewData]()
         var eventIndexSelected: Int?
+        @Published var hourChange = 0
     }
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
@@ -99,6 +100,13 @@ extension LifeCalendarViewModel: ViewModel {
                     output.eventArray[index] = eventChanged
                 }
             }
+            .store(in: cancelBag)
+        
+        input.onEndDragging
+            .map {
+                Int($0 / 80)
+            }
+            .assign(to: \.hourChange, on: output)
             .store(in: cancelBag)
         
         return output

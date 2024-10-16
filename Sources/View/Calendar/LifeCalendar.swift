@@ -32,6 +32,7 @@ public struct LifeCalendar: View {
             }
         }
         .modifier(EventSelectedModifier(event: input.eventSelected))
+        .modifier(EventChangeModifier2(hourChange: output.hourChange))
     }
     
     private var eventListView: some View {
@@ -75,11 +76,11 @@ public struct LifeCalendar: View {
     let event4 = EventViewData(id: "4", name: "event4", start: 2, end: 3)
     let eventArray = [event1, event2, event3, event4]
     
-    return LifeCalendar(eventArray: eventArray)
+    LifeCalendar(eventArray: eventArray)
         .onEventSelected {
             print("--- debug --- onEventSelected = ", $0.name)
         }
-        .onEventChanged {
-            print("--- debug --- onEventChanged = ", $0.name)
+        .onEventChanged2 {
+            print("--- debug --- onEventChanged = ", $0)
         }
 }
