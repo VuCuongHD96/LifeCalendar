@@ -9,7 +9,7 @@ import Foundation
 
 struct EventManager {
     
-    static func groupEvent(eventArray: [EventViewData]) -> [GroupEventViewData] {
+    static func groupEvent(eventArray: [EventCellData]) -> [GroupEventViewData] {
         var groupedEvents = [GroupEventViewData]()
         
         for event in eventArray {

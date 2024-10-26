@@ -9,13 +9,13 @@ import Combine
 
 struct LifeCalendarViewModel {
     
-    let eventArray: [EventViewData]
+    let eventArray: [EventCellData]
 }
 
 extension LifeCalendarViewModel: ViewModel {
     
     class Input: ObservableObject {
-        @Published var eventSelected: EventViewData = .init()
+        @Published var eventSelected: EventCellData = .init()
         var onDragging = PassthroughSubject<Float, Never>()
         var onEndDragging = PassthroughSubject<Float, Never>()
     }
@@ -24,7 +24,7 @@ extension LifeCalendarViewModel: ViewModel {
         @Published var groupedEvents: [GroupEventViewData] = []
         @Published var hourArray: [String] = []
         @Published var eventOffset: EventOffset = .init()
-        @Published var eventArray = [EventViewData]()
+        @Published var eventArray = [EventCellData]()
         var eventIndexSelected: Int?
     }
     
