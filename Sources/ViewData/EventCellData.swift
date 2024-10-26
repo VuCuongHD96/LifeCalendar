@@ -1,5 +1,5 @@
 //
-//  EventViewData.swift
+//  EventCellData.swift
 //
 //
 //  Created by Work on 25/6/24.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-public class EventViewData: Identifiable, Equatable {
+public class EventCellData: Identifiable, Equatable {
     
-    public static func == (lhs: EventViewData, rhs: EventViewData) -> Bool {
+    public static func == (lhs: EventCellData, rhs: EventCellData) -> Bool {
         lhs.id == rhs.id
     }
     
     public let id: String
-    let name: String
-    var start: Int
-    var end: Int
-    var selected = false
-    var dueration: Int
+    public let name: String
+    public var start: Int
+    public var end: Int
+    public var selected = false
+    public var dueration: Int
     
     public init(id: String, name: String, start: Int, end: Int) {
         self.id = id

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EventChangeModifier: ViewModifier {
     
-    @Binding var eventEndChanged: EventViewData?
+    @Binding var eventEndChanged: EventCellData?
     
     func body(content: Content) -> some View {
         

@@ -13,7 +13,7 @@ public struct LifeCalendar: View {
     @ObservedObject private var output: LifeCalendarViewModel.Output
     private let cancelBag = CancelBag()
     
-    public init(eventArray: [EventViewData]) {
+    public init(eventArray: [EventCellData]) {
         let viewModel = LifeCalendarViewModel(eventArray: eventArray)
         let input = LifeCalendarViewModel.Input()
         output = viewModel.transform(input, cancelBag: cancelBag)
@@ -69,13 +69,13 @@ public struct LifeCalendar: View {
 }
 
 #Preview {
-    let event1 = EventViewData(id: "1", name: "event1", start: 17, end: 20)
-    let event2 = EventViewData(id: "2", name: "event2", start: 19, end: 23)
-    let event3 = EventViewData(id: "3", name: "event3", start: 1, end: 2)
-    let event4 = EventViewData(id: "4", name: "event4", start: 2, end: 3)
+    let event1 = EventCellData(id: "1", name: "event1", start: 17, end: 20)
+    let event2 = EventCellData(id: "2", name: "event2", start: 19, end: 23)
+    let event3 = EventCellData(id: "3", name: "event3", start: 1, end: 2)
+    let event4 = EventCellData(id: "4", name: "event4", start: 2, end: 3)
     let eventArray = [event1, event2, event3, event4]
     
-    return LifeCalendar(eventArray: eventArray)
+    LifeCalendar(eventArray: eventArray)
         .onEventSelected {
             print("--- debug --- onEventSelected = ", $0.name)
         }

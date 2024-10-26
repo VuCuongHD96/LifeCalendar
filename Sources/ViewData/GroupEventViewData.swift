@@ -10,9 +10,9 @@ import SwiftUI
 struct GroupEventViewData: Identifiable, Sequence {
     
     let id = UUID()
-    var eventArray: [EventViewData]
+    var eventArray: [EventCellData]
     
-    func makeIterator() -> IndexingIterator<[EventViewData]> {
+    func makeIterator() -> IndexingIterator<[EventCellData]> {
         return eventArray.makeIterator()
     }
 }

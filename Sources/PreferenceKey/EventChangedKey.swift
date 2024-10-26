@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct EventChangedKey: PreferenceKey {
-    static var defaultValue: EventViewData = .init()
+    static var defaultValue: EventCellData = .init()
 
-    static func reduce(value: inout EventViewData, nextValue: () -> EventViewData) {
+    static func reduce(value: inout EventCellData, nextValue: () -> EventCellData) {
         value = nextValue()
     }
 }

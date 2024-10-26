@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EventView: View {
 
-    var event: EventViewData
+    var event: EventCellData
  
     var body: some View {
         Rectangle()
@@ -26,7 +26,7 @@ struct EventView: View {
 }
 
 #Preview {
-    let event = EventViewData(id: "1", name: "Event 1", start: 1, end: 3)
+    let event = EventCellData(id: "1", name: "Event 1", start: 1, end: 3)
     return ScrollView {
         EventView(event: event)
     }
