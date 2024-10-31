@@ -38,7 +38,7 @@ public struct LineView: View {
     }
 }
 
-#Preview {
-    LineView(lineWidth: 1, dash: 1)
-    LineView(lineWidth: 5)
-}
+//#Preview {
+//    LineView(lineWidth: 1, dash: 1)
+//    LineView(lineWidth: 5)
+//}
