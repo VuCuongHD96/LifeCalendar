@@ -11,13 +11,13 @@ import Foundation
 public typealias Driver<T> = AnyPublisher<T, Never>
 
 extension Publisher {
+    
     public func asDriver() -> Driver<Output> {
-        return self.catch { _ in Empty() }
-            .receive(on: RunLoop.main)
+        self.catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
     
-    public static func just(_ output: Output) -> Driver<Output> {
-        return Just(output).eraseToAnyPublisher()
-    }
+    static func justDriver(_ output: Output) -> Driver<Output> {
+       return Just(output).eraseToAnyPublisher()
+   }
 }
