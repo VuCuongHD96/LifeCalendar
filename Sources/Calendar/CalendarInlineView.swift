@@ -6,13 +6,19 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct CalendarInlineView: View {
     
-    let input: CalendarInlineViewModel.Input = .init()
+    // MARK: Define
+    typealias DateHandler = (Date) -> Void
+    
+    // MARK: Property
+    var dateSelected: DateHandler?
+    @ObservedObject var input: CalendarInlineViewModel.Input = .init()
     @State var output: CalendarInlineViewModel.Output = .init()
-    let viewModel = CalendarInlineViewModel()
-    let cancelBag = CancelBag()
+    private let viewModel = CalendarInlineViewModel()
+    private let cancelBag = CancelBag()
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
     var body: some View {
@@ -29,6 +35,7 @@ struct CalendarInlineView: View {
         ForEach(output.weekdaySymbolList, id: \.self) { weekdaySymbol in
             Text(weekdaySymbol)
                 .frame(maxWidth: .infinity, minHeight: 50)
+                .fontWeight(.bold)
         }
     }
     
@@ -36,6 +43,17 @@ struct CalendarInlineView: View {
         ForEach(output.weekDayList, id: \.self) { weekday in
             Text("\(weekday.day)")
                 .frame(maxWidth: .infinity, minHeight: 50)
+                .background(
+                    input.dateSelected.day == weekday.day ? .red : .clear
+                )
+                .clipShape(Circle())
+                .foregroundStyle(
+                    input.dateSelected.day == weekday.day ? .white : .black
+                )
+                .onTapGesture {
+                    input.dateSelected = weekday
+                    dateSelected?(weekday)
+                }
         }
     }
 }
