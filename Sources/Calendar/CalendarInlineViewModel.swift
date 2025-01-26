@@ -13,9 +13,10 @@ struct CalendarInlineViewModel: ViewModel {
     
     let today = Date.now
     let calendarManager = CalendarManager()
-    
-    struct Input {
+
+    class Input: ObservableObject {
         var loadTrigger = PassthroughSubject<Void, Never>()
+        @Published var dateSelected: Date = .now
     }
     
     @Observable
