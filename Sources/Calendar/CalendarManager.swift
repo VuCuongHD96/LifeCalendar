@@ -20,6 +20,13 @@ struct CalendarManager {
         case vi = "vi_VN"
     }
     
+    static func createDateString(from date: Date, localeIdentifier: LocaleIdentifier) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "EEEE, dd MMMM, yyyy"
+        formatter.locale = Locale(identifier: localeIdentifier.rawValue)
+        return formatter.string(from: date)
+    }
+    
     func weekdaySymbolsStarting(from symbolDay: SymbolDay, localeIdentifier: LocaleIdentifier) -> [String] {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: localeIdentifier.rawValue)

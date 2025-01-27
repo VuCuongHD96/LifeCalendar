@@ -22,9 +22,13 @@ struct CalendarInlineView: View {
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
     var body: some View {
-        LazyVGrid(columns: gridItems, spacing: 0) {
-            weekdaySymbolView
-            weekDayListView
+        VStack {
+            LazyVGrid(columns: gridItems, spacing: 0) {
+                weekdaySymbolView
+                weekDayListView
+            }
+            Text(output.dateSelectedString)
+                .fontWeight(.medium)
         }
         .onAppear {
             output = viewModel.transform(input, cancelBag: cancelBag)
