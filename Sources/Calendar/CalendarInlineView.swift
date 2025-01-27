@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftDate
 
-struct CalendarInlineView: View {
+public struct CalendarInlineView: View {
     
     // MARK: Define
     typealias DateHandler = (Date) -> Void
@@ -21,13 +21,13 @@ struct CalendarInlineView: View {
     private let cancelBag = CancelBag()
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
-    var body: some View {
-        VStack {
+    public var body: some View {
+        VStack(spacing: 8) {
             LazyVGrid(columns: gridItems, spacing: 0) {
                 weekdaySymbolView
                 weekDayListView
             }
-            weekInfo
+            dateInfo
                 .padding(.horizontal, 4)
                 .fontWeight(.bold)
         }
@@ -37,7 +37,7 @@ struct CalendarInlineView: View {
         }
     }
     
-    var weekInfo: some View {
+    var dateInfo: some View {
         HStack {
             Image(systemName: "arrow.backward")
                 .frame(width: 40, height: 40)
