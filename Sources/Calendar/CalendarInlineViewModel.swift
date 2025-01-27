@@ -23,6 +23,7 @@ struct CalendarInlineViewModel: ViewModel {
     class Output {
         var weekdaySymbolList = [String]()
         var weekDayList: [Date] = []
+        var dateSelectedString = ""
     }
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
@@ -36,6 +37,13 @@ struct CalendarInlineViewModel: ViewModel {
         let weekDayList = calendarManager.getWeekDateList(from: today)
         Just(weekDayList)
             .assign(to: \.weekDayList, on: output)
+            .store(in: cancelBag)
+        
+        input.$dateSelected
+            .map {
+                CalendarManager.createDateString(from: $0, localeIdentifier: .vi)
+            }
+            .assign(to: \.dateSelectedString, on: output)
             .store(in: cancelBag)
         
         return output
