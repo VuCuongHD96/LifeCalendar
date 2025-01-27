@@ -11,7 +11,7 @@ import SwiftDate
 public struct CalendarInlineView: View {
     
     // MARK: Define
-    typealias DateHandler = (Date) -> Void
+    public typealias DateHandler = (Date) -> Void
     
     // MARK: Property
     var dateSelected: DateHandler?
@@ -20,6 +20,10 @@ public struct CalendarInlineView: View {
     private let viewModel = CalendarInlineViewModel()
     private let cancelBag = CancelBag()
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    
+    public init(dateSelected: @escaping DateHandler) {
+        self.dateSelected = dateSelected
+    }
     
     public var body: some View {
         VStack(spacing: 8) {
@@ -87,5 +91,7 @@ public struct CalendarInlineView: View {
 }
 
 #Preview {
-    CalendarInlineView()
+    CalendarInlineView(dateSelected: { _ in 
+        
+    })
 }

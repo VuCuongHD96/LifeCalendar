@@ -8,11 +8,11 @@
 import Combine
 import Foundation
 
-public typealias Driver<T> = AnyPublisher<T, Never>
+typealias Driver<T> = AnyPublisher<T, Never>
 
 extension Publisher {
     
-    public func asDriver() -> Driver<Output> {
+    func asDriver() -> Driver<Output> {
         self.catch { _ in Empty() }
             .eraseToAnyPublisher()
     }
