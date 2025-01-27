@@ -20,6 +20,8 @@ struct CalendarManager {
         case vi = "vi_VN"
     }
     
+    private init() { }
+    
     static func createDateString(from date: Date, localeIdentifier: LocaleIdentifier) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMMM, yyyy"
@@ -27,7 +29,7 @@ struct CalendarManager {
         return formatter.string(from: date)
     }
     
-    func weekdaySymbolsStarting(from symbolDay: SymbolDay, localeIdentifier: LocaleIdentifier) -> [String] {
+    static func weekdaySymbolsStarting(from symbolDay: SymbolDay, localeIdentifier: LocaleIdentifier) -> [String] {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: localeIdentifier.rawValue)
         let calendar = Calendar.current
@@ -37,7 +39,7 @@ struct CalendarManager {
         return Array(symbols[mondayIndex...] + symbols[..<mondayIndex])
     }
     
-    func getWeekDateList(from date: Date) -> [Date] {
+    static func getWeekDateList(from date: Date) -> [Date] {
         let startOfWeek = date.dateAt(.startOfWeek)
         let weekDays = (0..<7).map { startOfWeek + $0.days }
         return weekDays

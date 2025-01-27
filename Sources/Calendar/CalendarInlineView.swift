@@ -10,19 +10,15 @@ import SwiftDate
 
 public struct CalendarInlineView: View {
     
-    // MARK: Define
-    public typealias DateHandler = (Date) -> Void
-    
-    // MARK: Property
-    var dateSelected: DateHandler?
-    @ObservedObject var input: CalendarInlineViewModel.Input = .init()
-    @State var output: CalendarInlineViewModel.Output = .init()
-    private let viewModel = CalendarInlineViewModel()
-    private let cancelBag = CancelBag()
+    @Binding var dateSelected: Date
+    private var cancelBag = CancelBag()
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    @State private var weekDayList: [Date] = []
+    @State private var weekdaySymbolList = [String]()
+    @State private var dateSelectedString = ""
     
-    public init(dateSelected: @escaping DateHandler) {
-        self.dateSelected = dateSelected
+    public init(dateSelected: Binding<Date>) {
+        _dateSelected = dateSelected
     }
     
     public var body: some View {
@@ -36,8 +32,12 @@ public struct CalendarInlineView: View {
                 .fontWeight(.bold)
         }
         .onAppear {
-            output = viewModel.transform(input, cancelBag: cancelBag)
-            input.loadTrigger.send()
+            dateSelected = .now
+        }
+        .onChange(of: dateSelected) { oldValue, newValue in
+            weekDayList = CalendarManager.getWeekDateList(from: newValue)
+            dateSelectedString = CalendarManager.createDateString(from: newValue, localeIdentifier: .vi)
+            weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, localeIdentifier: .vi)
         }
     }
     
@@ -48,9 +48,9 @@ public struct CalendarInlineView: View {
                 .background(.gray)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .onTapGesture {
-                    input.forwardWeekTrigger.send()
+                    dateSelected = CalendarManager.getForwarkWeekDate(from: dateSelected)
                 }
-            Text(output.dateSelectedString)
+            Text(dateSelectedString)
                 .fontWeight(.medium)
                 .frame(maxWidth: .infinity)
             Image(systemName: "arrow.forward")
@@ -58,13 +58,13 @@ public struct CalendarInlineView: View {
                 .background(.gray)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .onTapGesture {
-                    input.nextWeekTrigger.send()
+                    dateSelected = CalendarManager.getNextWeekDate(from: dateSelected)
                 }
         }
     }
     
     var weekdaySymbolView: some View {
-        ForEach(output.weekdaySymbolList, id: \.self) { weekdaySymbol in
+        ForEach(weekdaySymbolList, id: \.self) { weekdaySymbol in
             Text(weekdaySymbol)
                 .frame(maxWidth: .infinity, minHeight: 50)
                 .fontWeight(.bold)
@@ -72,26 +72,28 @@ public struct CalendarInlineView: View {
     }
     
     var weekDayListView: some View {
-        ForEach(output.weekDayList, id: \.self) { weekday in
+        ForEach(weekDayList, id: \.self) { weekday in
             Text("\(weekday.day)")
-                .frame(maxWidth: .infinity, minHeight: 50)
+                .fontWeight(.medium)
+                .frame(maxWidth: .infinity, minHeight: 40)
                 .background(
-                    input.dateSelected.day == weekday.day ? .red : .clear
+                    dateSelected.day == weekday.day ? .red : .clear
                 )
                 .clipShape(Circle())
                 .foregroundStyle(
-                    input.dateSelected.day == weekday.day ? .white : .black
+                    dateSelected.day == weekday.day ? .white : Color.primary
                 )
                 .onTapGesture {
-                    input.dateSelected = weekday
-                    dateSelected?(weekday)
+                    dateSelected = weekday
                 }
         }
     }
 }
 
 #Preview {
-    CalendarInlineView(dateSelected: { _ in 
-        
-    })
+    
+    @Previewable
+    @State var dateSelected: Date = .now
+    
+    CalendarInlineView(dateSelected: $dateSelected)
 }
