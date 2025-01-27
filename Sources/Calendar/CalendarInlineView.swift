@@ -27,11 +27,28 @@ struct CalendarInlineView: View {
                 weekdaySymbolView
                 weekDayListView
             }
-            Text(output.dateSelectedString)
-                .fontWeight(.medium)
+            weekInfo
+                .padding(.horizontal, 4)
+                .fontWeight(.bold)
         }
         .onAppear {
             output = viewModel.transform(input, cancelBag: cancelBag)
+        }
+    }
+    
+    var weekInfo: some View {
+        HStack {
+            Image(systemName: "arrow.backward")
+                .frame(width: 40, height: 40)
+                .background(.gray)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+            Text(output.dateSelectedString)
+                .fontWeight(.medium)
+                .frame(maxWidth: .infinity)
+            Image(systemName: "arrow.forward")
+                .frame(width: 40, height: 40)
+                .background(.gray)
+                .clipShape(RoundedRectangle(cornerRadius: 8))
         }
     }
     
