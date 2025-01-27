@@ -33,6 +33,7 @@ struct CalendarInlineView: View {
         }
         .onAppear {
             output = viewModel.transform(input, cancelBag: cancelBag)
+            input.loadTrigger.send()
         }
     }
     
@@ -42,6 +43,9 @@ struct CalendarInlineView: View {
                 .frame(width: 40, height: 40)
                 .background(.gray)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .onTapGesture {
+                    input.forwardWeekTrigger.send()
+                }
             Text(output.dateSelectedString)
                 .fontWeight(.medium)
                 .frame(maxWidth: .infinity)
@@ -49,6 +53,9 @@ struct CalendarInlineView: View {
                 .frame(width: 40, height: 40)
                 .background(.gray)
                 .clipShape(RoundedRectangle(cornerRadius: 8))
+                .onTapGesture {
+                    input.nextWeekTrigger.send()
+                }
         }
     }
     

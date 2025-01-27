@@ -42,4 +42,12 @@ struct CalendarManager {
         let weekDays = (0..<7).map { startOfWeek + $0.days }
         return weekDays
     }
+    
+    static func getNextWeekDate(from date: Date) -> Date {
+        return date + 1.weeks
+    }
+    
+    static func getForwarkWeekDate(from date: Date) -> Date {
+        return date - 1.weeks
+    }
 }
