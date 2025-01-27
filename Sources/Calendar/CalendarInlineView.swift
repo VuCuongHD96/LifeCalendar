@@ -17,7 +17,7 @@ public struct CalendarInlineView: View {
     var dateSelected: DateHandler?
     @ObservedObject var input: CalendarInlineViewModel.Input = .init()
     @State var output: CalendarInlineViewModel.Output = .init()
-    private let viewModel = CalendarInlineViewModel()
+    @State private var viewModel: CalendarInlineViewModel!
     private let cancelBag = CancelBag()
     private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
@@ -36,12 +36,13 @@ public struct CalendarInlineView: View {
                 .fontWeight(.bold)
         }
         .onAppear {
+            viewModel = CalendarInlineViewModel()
             output = viewModel.transform(input, cancelBag: cancelBag)
             input.loadTrigger.send()
         }
     }
     
-    var dateInfo: some View {
+    public var dateInfo: some View {
         HStack {
             Image(systemName: "arrow.backward")
                 .frame(width: 40, height: 40)
@@ -80,7 +81,7 @@ public struct CalendarInlineView: View {
                 )
                 .clipShape(Circle())
                 .foregroundStyle(
-                    input.dateSelected.day == weekday.day ? .white : .black
+                    input.dateSelected.day == weekday.day ? .white : Color.primary
                 )
                 .onTapGesture {
                     input.dateSelected = weekday
