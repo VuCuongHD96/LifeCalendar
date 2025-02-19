@@ -14,6 +14,7 @@ public struct CalendarInlineView: View {
     var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     @State var weekDayList: [Date] = []
     @State var weekdaySymbolList = [String]()
+    @Environment(\.locale) var locale
     
     public init(dateSelected: Binding<Date>) {
         _dateSelected = dateSelected
@@ -34,7 +35,7 @@ public struct CalendarInlineView: View {
         }
         .onChange(of: dateSelected) { oldValue, newValue in
             weekDayList = CalendarManager.getWeekDateList(from: newValue)
-            weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, localeIdentifier: .vi)
+            weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, locale: locale)
         }
     }
     
@@ -46,7 +47,6 @@ public struct CalendarInlineView: View {
                     dateSelected = CalendarManager.getForwarkWeekDate(from: dateSelected)
                 }
             LifeDatePicker(dateSelected: $dateSelected)
-                .frame(maxWidth: .infinity)
             Image(systemName: "arrow.forward")
                 .modifier(WeekNavigateModifier())
                 .onTapGesture {

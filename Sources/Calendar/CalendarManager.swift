@@ -15,23 +15,18 @@ struct CalendarManager {
         case sunday = -2
     }
     
-    enum LocaleIdentifier: String {
-        case us = "en_US"
-        case vi = "vi_VN"
-    }
-    
     private init() { }
     
-    static func createDateString(from date: Date, localeIdentifier: LocaleIdentifier) -> String {
+    static func createDateString(from date: Date, locale: Locale) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, dd MMMM, yyyy"
-        formatter.locale = Locale(identifier: localeIdentifier.rawValue)
+        formatter.locale = locale
         return formatter.string(from: date)
     }
     
-    static func weekdaySymbolsStarting(from symbolDay: SymbolDay, localeIdentifier: LocaleIdentifier) -> [String] {
+    static func weekdaySymbolsStarting(from symbolDay: SymbolDay, locale: Locale) -> [String] {
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: localeIdentifier.rawValue)
+        dateFormatter.locale = locale
         let calendar = Calendar.current
         dateFormatter.calendar = calendar
         let symbols = dateFormatter.shortWeekdaySymbols ?? []

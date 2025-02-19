@@ -10,6 +10,7 @@ import SwiftUI
 struct LifeDatePicker: View {
     
     @Binding var dateSelected: Date
+    @Environment(\.locale) var locale
     
     var body: some View {
         ZStack {
@@ -17,7 +18,8 @@ struct LifeDatePicker: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .labelsHidden()
                 .opacity(0.1)
-            Text(CalendarManager.createDateString(from: dateSelected, localeIdentifier: .vi))
+                .environment(\.locale, locale)
+            Text(CalendarManager.createDateString(from: dateSelected, locale: locale))
                 .fontWeight(.medium)
                 .padding(8)
                 .foregroundColor(.white)
