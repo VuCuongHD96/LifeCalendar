@@ -11,11 +11,9 @@ import SwiftDate
 public struct CalendarInlineView: View {
     
     @Binding var dateSelected: Date
-    private var cancelBag = CancelBag()
-    private var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
-    @State private var weekDayList: [Date] = []
-    @State private var weekdaySymbolList = [String]()
-    @State private var dateSelectedString = ""
+    var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    @State var weekDayList: [Date] = []
+    @State var weekdaySymbolList = [String]()
     
     public init(dateSelected: Binding<Date>) {
         _dateSelected = dateSelected
@@ -28,15 +26,14 @@ public struct CalendarInlineView: View {
                 weekDayListView
             }
             dateInfo
-                .padding(.horizontal, 4)
-                .fontWeight(.bold)
+                .fontWeight(.medium)
+                .padding(.horizontal, 8)
         }
         .onAppear {
             dateSelected = .now
         }
         .onChange(of: dateSelected) { oldValue, newValue in
             weekDayList = CalendarManager.getWeekDateList(from: newValue)
-            dateSelectedString = CalendarManager.createDateString(from: newValue, localeIdentifier: .vi)
             weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, localeIdentifier: .vi)
         }
     }
@@ -44,19 +41,14 @@ public struct CalendarInlineView: View {
     var dateInfo: some View {
         HStack {
             Image(systemName: "arrow.backward")
-                .frame(width: 40, height: 40)
-                .background(.gray)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .modifier(WeekNavigateModifier())
                 .onTapGesture {
                     dateSelected = CalendarManager.getForwarkWeekDate(from: dateSelected)
                 }
-            Text(dateSelectedString)
-                .fontWeight(.medium)
+            LifeDatePicker(dateSelected: $dateSelected)
                 .frame(maxWidth: .infinity)
             Image(systemName: "arrow.forward")
-                .frame(width: 40, height: 40)
-                .background(.gray)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .modifier(WeekNavigateModifier())
                 .onTapGesture {
                     dateSelected = CalendarManager.getNextWeekDate(from: dateSelected)
                 }
@@ -66,7 +58,7 @@ public struct CalendarInlineView: View {
     var weekdaySymbolView: some View {
         ForEach(weekdaySymbolList, id: \.self) { weekdaySymbol in
             Text(weekdaySymbol)
-                .frame(maxWidth: .infinity, minHeight: 50)
+                .frame(maxWidth: .infinity, minHeight: 30)
                 .fontWeight(.bold)
         }
     }
