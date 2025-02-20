@@ -15,6 +15,7 @@ public struct CalendarInlineView: View {
     @State var weekDayList: [Date] = []
     @State var weekdaySymbolList = [String]()
     @Environment(\.locale) var locale
+    @State var canReloadDate = false
     
     public init(dateSelected: Binding<Date>) {
         _dateSelected = dateSelected
@@ -26,7 +27,7 @@ public struct CalendarInlineView: View {
                 weekdaySymbolView
                 weekDayListView
             }
-            dateInfo
+            dateNavigatorView
                 .fontWeight(.medium)
                 .padding(.horizontal, 8)
         }
@@ -36,22 +37,37 @@ public struct CalendarInlineView: View {
         .onChange(of: dateSelected) { oldValue, newValue in
             weekDayList = CalendarManager.getWeekDateList(from: newValue)
             weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, locale: locale)
+            canReloadDate = dateSelected.compare(toDate: Date(), granularity: .day) != .orderedSame
         }
     }
     
-    var dateInfo: some View {
+    var dateNavigatorView: some View {
         HStack {
             Image(systemName: "arrow.backward")
                 .modifier(WeekNavigateModifier())
                 .onTapGesture {
                     dateSelected = CalendarManager.getForwarkWeekDate(from: dateSelected)
                 }
-            LifeDatePicker(dateSelected: $dateSelected)
+            dateNavigatorMiddle
+                .animation(.spring, value: canReloadDate)
+                .frame(maxWidth: .infinity, alignment: .center)
             Image(systemName: "arrow.forward")
                 .modifier(WeekNavigateModifier())
                 .onTapGesture {
                     dateSelected = CalendarManager.getNextWeekDate(from: dateSelected)
                 }
+        }
+    }
+    
+    var dateNavigatorMiddle: some View {
+        HStack(spacing: 8) {
+            LifeDatePicker(dateSelected: $dateSelected)
+            if canReloadDate {
+                Image("dateReload", bundle: .module)
+                    .onTapGesture {
+                        dateSelected = .now
+                    }
+            }
         }
     }
     

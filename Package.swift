@@ -21,6 +21,9 @@ let package = Package(
             name: "LifeCalendar",
             dependencies: [
                 .product(name: "SwiftDate", package: "SwiftDate")
+            ],
+            resources: [
+                .process("Resources")
             ]
         ),
         .testTarget(
