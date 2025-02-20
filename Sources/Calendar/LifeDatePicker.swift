@@ -15,7 +15,6 @@ struct LifeDatePicker: View {
     var body: some View {
         ZStack {
             DatePicker("", selection: $dateSelected, displayedComponents: .date)
-                .frame(maxWidth: .infinity, alignment: .center)
                 .labelsHidden()
                 .opacity(0.1)
                 .environment(\.locale, locale)
