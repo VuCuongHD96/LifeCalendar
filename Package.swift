@@ -14,13 +14,15 @@ let package = Package(
             targets: ["LifeCalendar"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/malcommac/SwiftDate", from: "7.0.0")
+        .package(url: "https://github.com/malcommac/SwiftDate", from: "7.0.0"),
+        .package(url: "https://github.com/devxoul/Then", .upToNextMajor(from: "3.0.0")),
     ],
     targets: [
         .target(
             name: "LifeCalendar",
             dependencies: [
-                .product(name: "SwiftDate", package: "SwiftDate")
+                .product(name: "SwiftDate", package: "SwiftDate"),
+                .product(name: "Then", package: "Then")
             ],
             resources: [
                 .process("Resources")

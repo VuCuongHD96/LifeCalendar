@@ -1,5 +1,5 @@
 {
-  "originHash" : "4cafdf2769a214d05b88f01ebc5c68eed7841998d81dd336fb532ebf1a2ddab2",
+  "originHash" : "88a226d4ac3111f2b76fd4a54778143c345c0077a83b697ae7c34fbecf9ce1d1",
   "pins" : [
     {
       "identity" : "swiftdate",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "5d943224c3bb173e6ecf27295611615eba90c80e",
         "version" : "7.0.0"
+      }
+    },
+    {
+      "identity" : "then",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/devxoul/Then",
+      "state" : {
+        "revision" : "d41ef523faef0f911369f79c0b96815d9dbb6d7a",
+        "version" : "3.0.0"
       }
     }
   ],
