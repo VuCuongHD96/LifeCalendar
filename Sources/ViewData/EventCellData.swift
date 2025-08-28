@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public class EventCellData: Identifiable, Equatable {
+public struct EventCellData: Identifiable, Equatable {
     
     public static func == (lhs: EventCellData, rhs: EventCellData) -> Bool {
         lhs.id == rhs.id
@@ -15,20 +15,20 @@ public class EventCellData: Identifiable, Equatable {
     
     public let id: String
     public let name: String
-    public var start: Int
-    public var end: Int
+    public var start: Date
+    public var end: Date
     public var selected = false
     public var dueration: Int
     
-    public init(id: String, name: String, start: Int, end: Int) {
+    public init(id: String, name: String, start: Date, end: Date) {
         self.id = id
         self.name = name
         self.start = start
         self.end = end
-        self.dueration = end - start
+        self.dueration = Int(end.timeIntervalSince1970 - start.timeIntervalSince1970)/3600
     }
     
-    convenience init() {
-        self.init(id: "", name: "", start: 0, end: 0)
+    init() {
+        self.init(id: "", name: "", start: .setTime(hour: 1), end: .setTime(hour: 2))
     }
 }
