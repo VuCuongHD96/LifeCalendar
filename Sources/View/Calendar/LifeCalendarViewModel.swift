@@ -64,12 +64,12 @@ extension LifeCalendarViewModel: ViewModel {
             .compactMap { $0 }
             .sink { (oldValue, newValue) in
                 if let oldValue = oldValue {
-                    let oldEvent = output.eventArray[oldValue]
+                    var oldEvent = output.eventArray[oldValue]
                     oldEvent.selected = false
                     output.eventArray[oldValue] = oldEvent
                 }
                 if let newValue = newValue {
-                    let newEvent = output.eventArray[newValue]
+                    var newEvent = output.eventArray[newValue]
                     newEvent.selected = true
                     output.eventArray[newValue] = newEvent
                 }
@@ -93,9 +93,11 @@ extension LifeCalendarViewModel: ViewModel {
             .sink { offset in
                 if let index = output.eventIndexSelected {
                     let hourChange = Int(offset / 80)
-                    let eventChanged = output.eventArray[index]
-                    eventChanged.start += hourChange
-                    eventChanged.end += hourChange
+                    var eventChanged = output.eventArray[index]
+                    let newStartDate = eventChanged.start.hour + hourChange
+                    eventChanged.start.setSelfTime(hour: newStartDate)
+                    let newEndDate = eventChanged.end.hour + hourChange
+                    eventChanged.end.setSelfTime(hour: newEndDate)
                     output.eventArray[index] = eventChanged
                 }
             }

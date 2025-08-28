@@ -17,8 +17,8 @@ struct EventView: View {
             .overlay {
                 VStack {
                     Text(event.name)
-                    Text("start = \(event.start)")
-                    Text("end   = \(event.end)")
+                    Text("start = \(event.start.hour)")
+                    Text("end   = \(event.end.hour)")
                 }
             }
     }
@@ -26,7 +26,7 @@ struct EventView: View {
 }
 
 #Preview {
-    let event = EventCellData(id: "1", name: "Event 1", start: 1, end: 3)
+    let event = EventCellData(id: "1", name: "Event 1", start: .setTime(hour: 1), end: .setTime(hour: 3))
     return ScrollView {
         EventView(event: event)
     }

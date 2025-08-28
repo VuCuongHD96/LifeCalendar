@@ -2,6 +2,7 @@
 // https://docs.swift.org/swift-book
 
 import SwiftUI
+import SwiftDate
 
 public struct LifeCalendar: View {
     
@@ -43,7 +44,7 @@ public struct LifeCalendar: View {
                             .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
                             .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
                             .background(Color.red.opacity(event.selected ? 1 : 0))
-                            .padding(.top, CGFloat(event.start) * Constant.hourHeight + CGFloat(event.start))
+                            .padding(.top, CGFloat(event.start.hour) * Constant.hourHeight + CGFloat(event.start.hour))
                             .gesture(
                                 LongPressGesture()
                                     .onEnded { _ in
@@ -69,10 +70,10 @@ public struct LifeCalendar: View {
 }
 
 #Preview {
-    let event1 = EventCellData(id: "1", name: "event1", start: 17, end: 20)
-    let event2 = EventCellData(id: "2", name: "event2", start: 19, end: 23)
-    let event3 = EventCellData(id: "3", name: "event3", start: 1, end: 2)
-    let event4 = EventCellData(id: "4", name: "event4", start: 2, end: 3)
+    let event1 = EventCellData(id: "1", name: "event1", start: .setTime(hour: 17), end: .setTime(hour: 20))
+    let event2 = EventCellData(id: "2", name: "event2", start: .setTime(hour: 19), end: .setTime(hour: 23))
+    let event3 = EventCellData(id: "3", name: "event3", start: .setTime(hour: 1), end: .setTime(hour: 2))
+    let event4 = EventCellData(id: "4", name: "event4", start: .setTime(hour: 2), end: .setTime(hour: 3))
     let eventArray = [event1, event2, event3, event4]
     
     LifeCalendar(eventArray: eventArray)
