@@ -1,9 +1,10 @@
 import SwiftUI
+import LifeCalendar
 
 struct CalendarView: View {
     
     let input: CalendarViewModel.Input
-    @State private var output: CalendarViewModel.Output
+    @ObservedObject private var output: CalendarViewModel.Output
     let cancelBag = CancelBag()
     
     init() {
@@ -14,9 +15,12 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        Text("Calendar View")
-            .font(.title)
-            .navigationBarTitle("Life Calendar", displayMode: .inline)
+        LifeCalendar(
+            eventArray: output.eventList,
+            eventChangedHandler: {
+                input.eventChangeTrigger.send($0)
+            }
+        )
     }
 }
 

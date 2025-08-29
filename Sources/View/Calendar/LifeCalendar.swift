@@ -6,10 +6,6 @@ import SwiftDate
 
 public struct LifeCalendar: View {
     
-    private struct Constant {
-        static let hourHeight: CGFloat = 80
-    }
-    
     private let input: LifeCalendarViewModel.Input
     @ObservedObject private var output: LifeCalendarViewModel.Output
     private let cancelBag = CancelBag()
@@ -28,16 +24,31 @@ public struct LifeCalendar: View {
         ScrollView(showsIndicators: false) {
             HStack(alignment: .top) {
                 TimeListView(hourArray: output.hourArray)
-                DashListView(hourArray: output.hourArray)
-                    .overlay(alignment: .top) {
-                        eventListView
-                    }
+                eventSideView
                     .padding(.top, 10)
             }
+            .onReceive(output.$eventChanged) {
+                if let eventChanged = $0 {
+                    eventChangedHandler?(eventChanged)
+                }
+            }
         }
-        .onReceive(output.$eventChanged) {
-            if let eventChanged = $0 {
-                eventChangedHandler?(eventChanged)
+    }
+    
+    private var eventSideView: some View {
+        ZStack(alignment: .top) {
+            DashListView(hourArray: output.hourArray)
+            eventListView
+            if let event = input.eventSelected {
+                EventCellOverlay(
+                    event: event,
+                    totalOffset: output.eventOffset.totalOffset,
+                    onDraggingHandle: {
+                        input.onDragging.send($0)
+                    }, onEndDraggingHandle: {
+                        input.onEndDragging.send($0)
+                    }
+                )
             }
         }
     }
@@ -55,27 +66,11 @@ public struct LifeCalendar: View {
     }
     
     private func eventRow(event: EventCellData) -> some View {
-        let eventStartHour = CGFloat(event.start.adjustToLocalTime().hour)
-        return EventView(event: event)
-            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
-            .offset(y: event.selected ? CGFloat(output.eventOffset.totalOffset) : 0)
-            .background(Color.red.opacity(event.selected ? 1 : 0))
-            .padding(.top, eventStartHour * Constant.hourHeight + eventStartHour)
+        EventCell(event: event)
             .gesture(
                 LongPressGesture()
                     .onEnded { _ in
                         input.eventSelected = event
-                    }
-            )
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        let offsetHeight = Float(value.translation.height)
-                        input.onDragging.send(offsetHeight)
-                    }
-                    .onEnded { value in
-                        let offsetHeight = Float(value.translation.height)
-                        input.onEndDragging.send(offsetHeight)
                     }
             )
     }

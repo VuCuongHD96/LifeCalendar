@@ -7,6 +7,7 @@
 
 import Combine
 import SwiftDate
+import Foundation
 
 struct LifeCalendarViewModel {
     
@@ -17,8 +18,8 @@ extension LifeCalendarViewModel: ViewModel {
     
     class Input: ObservableObject {
         @Published var eventSelected: EventCellData?
-        var onDragging = PassthroughSubject<Float, Never>()
-        var onEndDragging = PassthroughSubject<Float, Never>()
+        var onDragging = PassthroughSubject<CGFloat, Never>()
+        var onEndDragging = PassthroughSubject<CGFloat, Never>()
     }
     
     class Output: ObservableObject {
