@@ -35,7 +35,6 @@ public struct LifeCalendar: View {
                     .padding(.top, 10)
             }
         }
-        .modifier(EventSelectedModifier(event: input.eventSelected))
         .onReceive(output.$eventChanged) {
             if let eventChanged = $0 {
                 eventChangedHandler?(eventChanged)

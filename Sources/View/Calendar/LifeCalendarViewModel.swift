@@ -16,7 +16,7 @@ struct LifeCalendarViewModel {
 extension LifeCalendarViewModel: ViewModel {
     
     class Input: ObservableObject {
-        @Published var eventSelected: EventCellData = .init()
+        @Published var eventSelected: EventCellData?
         var onDragging = PassthroughSubject<Float, Never>()
         var onEndDragging = PassthroughSubject<Float, Never>()
     }
@@ -49,6 +49,7 @@ extension LifeCalendarViewModel: ViewModel {
             .store(in: cancelBag)
         
         let eventIndexSelected = input.$eventSelected
+            .compactMap { $0 }
             .compactMap {
                 eventArray.firstIndex(of: $0)
             }
