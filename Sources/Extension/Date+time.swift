@@ -9,7 +9,7 @@ import Foundation
 
 extension Date {
     
-    static func setTime(hour: Int, timeZone: String = "GMT") -> Self {
+    public static func setTime(hour: Int, timeZone: String = "GMT") -> Self {
         let component: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
         let calendar = Calendar.current
         var components = calendar.dateComponents(component, from: Self())

@@ -8,9 +8,9 @@
 import Foundation
 
 struct EventOffset {
-    var offset: Float = .zero
-    var lastOffset: Float = .zero
-    var totalOffset: Float {
+    var offset: CGFloat = .zero
+    var lastOffset: CGFloat = .zero
+    var totalOffset: CGFloat {
         offset + lastOffset
     }
     
