@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SwiftDate
 
 struct LifeCalendarViewModel {
     
@@ -26,6 +27,7 @@ extension LifeCalendarViewModel: ViewModel {
         @Published var eventOffset: EventOffset = .init()
         @Published var eventArray = [EventCellData]()
         var eventIndexSelected: Int?
+        @Published var eventChanged: EventCellData?
     }
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
@@ -45,14 +47,14 @@ extension LifeCalendarViewModel: ViewModel {
         Just(TimeManager.gethourArray())
             .assign(to: \.hourArray, on: output)
             .store(in: cancelBag)
-
+        
         let eventIndexSelected = input.$eventSelected
             .compactMap {
                 eventArray.firstIndex(of: $0)
             }
         
         eventIndexSelected
-            .sink { 
+            .sink {
                 output.eventIndexSelected = $0
             }
             .store(in: cancelBag)
@@ -88,17 +90,17 @@ extension LifeCalendarViewModel: ViewModel {
                 output.eventOffset.reset()
             }
             .store(in: cancelBag)
-
+        
         input.onEndDragging
             .sink { offset in
                 if let index = output.eventIndexSelected {
                     let hourChange = Int(offset / 80)
                     var eventChanged = output.eventArray[index]
-                    let newStartDate = eventChanged.start.hour + hourChange
-                    eventChanged.start.setSelfTime(hour: newStartDate)
-                    let newEndDate = eventChanged.end.hour + hourChange
-                    eventChanged.end.setSelfTime(hour: newEndDate)
-                    output.eventArray[index] = eventChanged
+                    let newStartDate = eventChanged.start + hourChange.hours
+                    eventChanged.start = newStartDate
+                    let newEndDate = eventChanged.end + hourChange.hours
+                    eventChanged.end = newEndDate
+                    output.eventChanged = eventChanged
                 }
             }
             .store(in: cancelBag)

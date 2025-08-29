@@ -29,6 +29,6 @@ public struct EventCellData: Identifiable, Equatable {
     }
     
     init() {
-        self.init(id: "", name: "", start: .setTime(hour: 1), end: .setTime(hour: 2))
+        self.init(id: "", name: "", start: .setTime(hour: 0), end: .setTime(hour: 0))
     }
 }
