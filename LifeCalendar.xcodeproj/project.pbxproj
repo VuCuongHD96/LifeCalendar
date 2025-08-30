@@ -8,7 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		28427AA4E203F72A9CBE48D3 /* LifeCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = CADB07AC217BFD9E19FA5CF3 /* LifeCalendar */; };
-		4F4D07DFEE3651A8D5E5D5B0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9752FDA4ABD1186B4CD5F234 /* ContentView.swift */; };
+		4F4D07DFEE3651A8D5E5D5B0 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9752FDA4ABD1186B4CD5F234 /* CalendarView.swift */; };
+		A4D4929D2E635A760082AADD /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D4929C2E635A760082AADD /* CalendarViewModel.swift */; };
+		A4D492A62E635AA00082AADD /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D492A22E635AA00082AADD /* Observable.swift */; };
+		A4D492A72E635AA00082AADD /* ActivityTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D4929E2E635AA00082AADD /* ActivityTracker.swift */; };
+		A4D492A82E635AA00082AADD /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D492A12E635AA00082AADD /* ErrorTracker.swift */; };
+		A4D492A92E635AA00082AADD /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D4929F2E635AA00082AADD /* CancelBag.swift */; };
+		A4D492AA2E635AA00082AADD /* Driver.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D492A02E635AA00082AADD /* Driver.swift */; };
+		A4D492AB2E635AA00082AADD /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D492A42E635AA00082AADD /* ViewModelType.swift */; };
+		A4D492AC2E635AA00082AADD /* Publisher+.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D492A32E635AA00082AADD /* Publisher+.swift */; };
 		E35683F9EFF25E3D71529207 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C87AB414446462EB5253AEE6 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
@@ -17,7 +25,15 @@
 		38F51C9A8D49C6F28FC72DBC /* iOSDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iOSDemo.entitlements; sourceTree = "<group>"; };
 		508E62C7458E2E560F51C1A0 /* iOSDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		623DB0A5C7CEC0847B6509A0 /* LifeCalendar */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LifeCalendar; path = .; sourceTree = SOURCE_ROOT; };
-		9752FDA4ABD1186B4CD5F234 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9752FDA4ABD1186B4CD5F234 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		A4D4929C2E635A760082AADD /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		A4D4929E2E635AA00082AADD /* ActivityTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityTracker.swift; sourceTree = "<group>"; };
+		A4D4929F2E635AA00082AADD /* CancelBag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
+		A4D492A02E635AA00082AADD /* Driver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Driver.swift; sourceTree = "<group>"; };
+		A4D492A12E635AA00082AADD /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
+		A4D492A22E635AA00082AADD /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		A4D492A32E635AA00082AADD /* Publisher+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+.swift"; sourceTree = "<group>"; };
+		A4D492A42E635AA00082AADD /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		C87AB414446462EB5253AEE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,8 +60,8 @@
 		35F24D97F4EC9F83371BF882 /* iOSDemo */ = {
 			isa = PBXGroup;
 			children = (
-				C87AB414446462EB5253AEE6 /* AppDelegate.swift */,
-				9752FDA4ABD1186B4CD5F234 /* ContentView.swift */,
+				A4D492AD2E635AF90082AADD /* UI */,
+				A4D492A52E635AA00082AADD /* Architecture */,
 				1D1CE96653773E5CB78C1F6A /* Info.plist */,
 				38F51C9A8D49C6F28FC72DBC /* iOSDemo.entitlements */,
 			);
@@ -67,6 +83,30 @@
 				508E62C7458E2E560F51C1A0 /* iOSDemo.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A4D492A52E635AA00082AADD /* Architecture */ = {
+			isa = PBXGroup;
+			children = (
+				A4D4929E2E635AA00082AADD /* ActivityTracker.swift */,
+				A4D4929F2E635AA00082AADD /* CancelBag.swift */,
+				A4D492A02E635AA00082AADD /* Driver.swift */,
+				A4D492A12E635AA00082AADD /* ErrorTracker.swift */,
+				A4D492A22E635AA00082AADD /* Observable.swift */,
+				A4D492A32E635AA00082AADD /* Publisher+.swift */,
+				A4D492A42E635AA00082AADD /* ViewModelType.swift */,
+			);
+			path = Architecture;
+			sourceTree = "<group>";
+		};
+		A4D492AD2E635AF90082AADD /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C87AB414446462EB5253AEE6 /* AppDelegate.swift */,
+				9752FDA4ABD1186B4CD5F234 /* CalendarView.swift */,
+				A4D4929C2E635A760082AADD /* CalendarViewModel.swift */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,8 +177,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A4D4929D2E635A760082AADD /* CalendarViewModel.swift in Sources */,
 				E35683F9EFF25E3D71529207 /* AppDelegate.swift in Sources */,
-				4F4D07DFEE3651A8D5E5D5B0 /* ContentView.swift in Sources */,
+				4F4D07DFEE3651A8D5E5D5B0 /* CalendarView.swift in Sources */,
+				A4D492A62E635AA00082AADD /* Observable.swift in Sources */,
+				A4D492A72E635AA00082AADD /* ActivityTracker.swift in Sources */,
+				A4D492A82E635AA00082AADD /* ErrorTracker.swift in Sources */,
+				A4D492A92E635AA00082AADD /* CancelBag.swift in Sources */,
+				A4D492AA2E635AA00082AADD /* Driver.swift in Sources */,
+				A4D492AB2E635AA00082AADD /* ViewModelType.swift in Sources */,
+				A4D492AC2E635AA00082AADD /* Publisher+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
