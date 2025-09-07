@@ -24,10 +24,18 @@ extension CalendarViewModel {
     
     class Output: ObservableObject {
         @Published var eventList: [EventCellData] = []
+        @Published var groupedEvents: [GroupEventViewData] = []
     }
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
         let output = Output()
+        
+        output.$eventList
+            .map {
+                EventManager.groupEvent(eventArray: $0)
+            }
+            .assign(to: \.groupedEvents, on: output)
+            .store(in: cancelBag)
         
         input.eventChangeTrigger
             .sink {

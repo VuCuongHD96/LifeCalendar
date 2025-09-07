@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct GroupEventViewData: Identifiable, Sequence {
+public struct GroupEventViewData: Identifiable, Sequence {
     
-    let id = UUID()
+    public let id = UUID()
     var eventArray: [EventCellData]
     
-    func makeIterator() -> IndexingIterator<[EventCellData]> {
+    public func makeIterator() -> IndexingIterator<[EventCellData]> {
         return eventArray.makeIterator()
     }
 }

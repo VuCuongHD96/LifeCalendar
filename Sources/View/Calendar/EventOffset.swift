@@ -15,7 +15,7 @@ struct EventOffset {
     }
     
     mutating func reset() {
-        offset = 0
-        lastOffset = 0
+        offset = .zero
+        lastOffset = .zero
     }
 }
