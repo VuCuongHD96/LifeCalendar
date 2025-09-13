@@ -6,6 +6,7 @@ struct CalendarView: View {
     let input: CalendarViewModel.Input
     @ObservedObject private var output: CalendarViewModel.Output
     let cancelBag = CancelBag()
+    @State private var dateSelected: Date = .now
     
     init() {
         let viewModel = CalendarViewModel()
@@ -15,12 +16,15 @@ struct CalendarView: View {
     }
     
     var body: some View {
-        LifeCalendar(
-            eventArray: output.eventList,
-            eventChangedHandler: {
-                input.eventChangeTrigger.send($0)
-            }
-        )
+        VStack {
+            CalendarInlineView(dateSelected: $dateSelected)
+            LifeCalendar(
+                groupedEvents: output.groupedEvents,
+                eventChangedHandler: {
+                    input.eventChangeTrigger.send($0)
+                }
+            )
+        }
     }
 }
 

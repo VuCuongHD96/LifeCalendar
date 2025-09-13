@@ -12,30 +12,13 @@ struct EventCellOverlay: View {
     typealias HeightHandler = (CGFloat) -> Void
     
     var event: EventCellData
-    var totalOffset: CGFloat
-    var onDraggingHandle: HeightHandler?
-    var onEndDraggingHandle: HeightHandler?
+    @Binding var eventOffset: EventOffset
     
     var body: some View {
         EventCell(event: event, opacity: 1)
-            .padding(.top, totalOffset)
+            .padding(.top, eventOffset.totalOffset)
             .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        let offsetHeight = value.translation.height
-                        onDraggingHandle?(offsetHeight)
-                    }
-                    .onEnded { value in
-                        let offsetHeight = value.translation.height
-                        onEndDraggingHandle?(offsetHeight)
-                    }
+                EventCellDragGesture(eventOffset: $eventOffset)
             )
     }
-}
-
-#Preview {
-    
-    let event = EventCellData(id: "1", name: "Event 1", start: .setTime(hour: 1), end: .setTime(hour: 3))
-    
-    EventCellOverlay(event: event, totalOffset: 0)
 }

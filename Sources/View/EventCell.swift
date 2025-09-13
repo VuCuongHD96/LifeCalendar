@@ -29,15 +29,3 @@ struct EventCell: View {
     }
 
 }
-
-#Preview {
-
-    let event = EventCellData(id: "1", name: "Event 1", start: .setTime(hour: 1), end: .setTime(hour: 3))
-    
-    LifeCalendar(
-        eventArray: [event],
-        eventChangedHandler: {
-            print("--- debug --- eventChangedHandler = ", $0)
-        }
-    )
-}
