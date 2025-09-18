@@ -24,8 +24,7 @@ struct EventCell: View {
                     Text("end   = \(event.end.adjustToLocalTime().hour)")
                 }
             }
-            .frame(height: CGFloat(event.dueration) * Constant.hourHeight + CGFloat(event.dueration - 1))
-            .padding(.top, eventStartHour * Constant.hourHeight + eventStartHour)
+            .frame(height: CGFloat(event.dueration) * TimeManager.lineSpacing + CGFloat(event.dueration - 1))
+            .padding(.top, eventStartHour * TimeManager.lineSpacing + eventStartHour)
     }
-
 }

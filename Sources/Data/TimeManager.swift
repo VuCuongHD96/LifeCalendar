@@ -9,8 +9,10 @@ import Foundation
 
 struct TimeManager {
     
-    static let hourSpacing = 60
-    
+    static let timeLabelSpacing: CGFloat = lineSpacing - timeLabelHeight + 1
+    static let timeLabelHeight: CGFloat = 21
+    static let lineSpacing: CGFloat = 60
+
     static func gethourArray() -> [String] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "hh:mm a"

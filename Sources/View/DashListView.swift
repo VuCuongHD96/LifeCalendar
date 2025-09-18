@@ -10,7 +10,7 @@ import SwiftUI
 struct DashListView: View {
     
     private struct Constant {
-        static let timeSpacing = CGFloat(TimeManager.hourSpacing)
+        static let timeSpacing = CGFloat(TimeManager.timeLabelSpacing)
     }
     
     var hourArray: [String]
@@ -22,7 +22,7 @@ struct DashListView: View {
                     lineView
                     Rectangle()
                         .fill(Color.blue)
-                        .frame(width: 10, height: Constant.timeSpacing + 20)
+                        .frame(width: 10, height: TimeManager.lineSpacing)   
                 }
             }
             lineView
