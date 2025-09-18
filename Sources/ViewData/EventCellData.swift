@@ -18,14 +18,14 @@ public struct EventCellData: Identifiable, Equatable {
     public var start: Date
     public var end: Date
     public var selected = false
-    public var dueration: Int
+    public var dueration: TimeInterval
     
     public init(id: String, name: String, start: Date, end: Date) {
         self.id = id
         self.name = name
         self.start = start
         self.end = end
-        self.dueration = Int(end.timeIntervalSince1970 - start.timeIntervalSince1970)/3600
+        self.dueration = (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
     }
     
     init() {
