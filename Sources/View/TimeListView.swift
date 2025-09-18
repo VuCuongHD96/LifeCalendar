@@ -10,7 +10,7 @@ import SwiftUI
 struct TimeListView: View {
     
     private struct Constant {
-        static let timeSpacing = CGFloat(TimeManager.hourSpacing)
+        static let timeSpacing = CGFloat(TimeManager.timeLabelSpacing)
     }
     
     var hourArray: [String]
@@ -32,7 +32,7 @@ struct TimeListView: View {
     
     private func timeView(hour: String) -> some View {
         Text(hour)
-            .frame(height: 21)
+            .frame(height: TimeManager.timeLabelHeight) 
             .background(Color.green)
     }
 }

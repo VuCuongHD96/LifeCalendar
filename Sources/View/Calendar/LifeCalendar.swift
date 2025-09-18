@@ -64,12 +64,12 @@ public struct LifeCalendar: View {
     private func eventRow(event: EventCellData) -> some View {
         EventCell(event: event)
             .gesture(
-                LongPressGesture(minimumDuration: 0.1, maximumDistance: 0.2)
-                    .sequenced(before: SpatialTapGesture(coordinateSpace: .local))
-                    .onChanged { _ in
+                LongPressGesture(minimumDuration: 0.2, maximumDistance: 0.5)
+                    .onEnded { _ in
                         eventSelected = event
                         eventOffset.reset()
                     }
+                    .sequenced(before: SpatialTapGesture(coordinateSpace: .local))
                     .simultaneously(with: EventCellDragGesture(eventOffset: $eventOffset)
                         .onEnded { _ in
                             updateEventSelected(newLastOffset: eventOffset.lastOffset)
@@ -80,7 +80,7 @@ public struct LifeCalendar: View {
     
     private func updateEventSelected(newLastOffset: CGFloat) {
         if var eventSelected {
-            let hourChange = Int(newLastOffset / Constant.hourHeight)
+            let hourChange = Int(newLastOffset / TimeManager.lineSpacing)
             let oldStartDate = eventSelected.start
             let newStartDate = oldStartDate + hourChange.hours
             eventSelected.start = newStartDate
