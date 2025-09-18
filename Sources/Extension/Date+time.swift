@@ -24,10 +24,6 @@ extension Date {
         }
     }
     
-    public func setTime(hour: Int, timeZone: String = "GMT") -> Self {
-        Self.setTime(hour: hour)
-    }
-    
     func adjustToLocalTime() -> Self {
         let timeZoneOffset = Double(TimeZone.current.secondsFromGMT(for: self))
         return self + timeZoneOffset

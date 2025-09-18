@@ -81,12 +81,12 @@ public struct LifeCalendar: View {
     private func updateEventSelected(newLastOffset: CGFloat) {
         if var eventSelected {
             let hourChange = Int(newLastOffset / Constant.hourHeight)
-            let oldStartHour = eventSelected.start.hour
-            let newStartHour = oldStartHour + hourChange
-            eventSelected.start = eventSelected.start.setTime(hour: newStartHour)
-            let oldEndHour = eventSelected.end.hour
-            let newEndHour = oldEndHour + hourChange
-            eventSelected.end = eventSelected.end.setTime(hour: newEndHour)
+            let oldStartDate = eventSelected.start
+            let newStartDate = oldStartDate + hourChange.hours
+            eventSelected.start = newStartDate
+            let oldEndDate = eventSelected.end
+            let newEndDate = oldEndDate + hourChange.hours
+            eventSelected.end = newEndDate
             eventChangedHandler?(eventSelected)
         }
         eventSelected = nil
