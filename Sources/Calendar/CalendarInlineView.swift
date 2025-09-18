@@ -30,6 +30,7 @@ public struct CalendarInlineView: View {
             dateNavigatorView
                 .fontWeight(.medium)
                 .padding(.horizontal, 8)
+                .lineLimit(1)
         }
         .onAppear {
             dateSelected = .now
