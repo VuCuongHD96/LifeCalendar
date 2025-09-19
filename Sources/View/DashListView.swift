@@ -22,7 +22,7 @@ struct DashListView: View {
                     lineView
                     Rectangle()
                         .fill(Color.blue)
-                        .frame(width: 10, height: TimeManager.lineSpacing)   
+                        .frame(width: 10, height: TimeManager.lineSpacing)
                 }
             }
             lineView
@@ -32,7 +32,7 @@ struct DashListView: View {
     private var lineView: some View {
         LineView(lineWidth: 2, dash: 10)
             .foregroundStyle(.blue)
-            .frame(height: 1)
+            .frame(height: TimeManager.lineHeight)
     }
 }
 

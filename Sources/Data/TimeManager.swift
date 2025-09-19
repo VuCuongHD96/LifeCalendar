@@ -12,6 +12,7 @@ struct TimeManager {
     static let timeLabelSpacing: CGFloat = lineSpacing - timeLabelHeight + 1
     static let timeLabelHeight: CGFloat = 21
     static let lineSpacing: CGFloat = 60
+    static let lineHeight: CGFloat = 1
 
     static func gethourArray() -> [String] {
         let dateFormatter = DateFormatter()
