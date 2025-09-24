@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct EventCell: View {
-
-    var event: EventCellData
-    var opacity: Double? = 0.5
- 
+    
+    let event: EventCellData
+    let opacity: Double
+    
     var body: some View {
         let eventStartHour = CGFloat(event.start.adjustToLocalTime().hour)
         let eventStartMinute = CGFloat(event.start.adjustToLocalTime().minute)
-        let cellHeight: CGFloat = event.dueration * TimeManager.lineSpacing + (event.dueration - 1) - 1
+        let cellHeight: CGFloat = event.hourDueration * TimeManager.lineSpacing + (event.hourDueration - 1) - 1
         
         Rectangle()
-            .fill(Color.blue.opacity(opacity ?? 1))
+            .fill(.clear)
+            .setupLifeEventBackGroundModifier(
+                param: .init(color: event.color, opacity: opacity)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 8))
             .overlay {
                 VStack {
                     Text(event.name)
