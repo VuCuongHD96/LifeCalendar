@@ -21,7 +21,7 @@ struct DashListView: View {
                 VStack(spacing: 0) {
                     lineView
                     Rectangle()
-                        .fill(Color.blue)
+                        .fill(.clear)
                         .frame(width: 10, height: TimeManager.lineSpacing)
                 }
             }
@@ -31,7 +31,7 @@ struct DashListView: View {
     
     private var lineView: some View {
         LineView(lineWidth: 2, dash: 10)
-            .foregroundStyle(.blue)
+            .foregroundStyle(.blue.opacity(0.4))
             .frame(height: TimeManager.lineHeight)
     }
 }
