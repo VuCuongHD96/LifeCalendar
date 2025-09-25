@@ -7,28 +7,30 @@
 
 import SwiftUI
 
-public struct EventCellData: Identifiable, Equatable {
-    
-    public static func == (lhs: EventCellData, rhs: EventCellData) -> Bool {
-        lhs.id == rhs.id
-    }
-    
+public struct EventCellData: Identifiable {
+
     public let id: String
     public let name: String
     public var start: Date
     public var end: Date
     public var selected = false
-    public var dueration: TimeInterval
+    public var color: Color
+    public var hourDueration: TimeInterval {
+        (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
+    }
     
-    public init(id: String, name: String, start: Date, end: Date) {
+    public init(id: String, name: String, start: Date, end: Date, color: Color) {
         self.id = id
         self.name = name
         self.start = start
         self.end = end
-        self.dueration = (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
+        self.color = color
     }
+}
+
+extension EventCellData: Equatable {
     
-    init() {
-        self.init(id: "", name: "", start: .setTime(hour: 0), end: .setTime(hour: 0))
+    public static func == (lhs: EventCellData, rhs: EventCellData) -> Bool {
+        lhs.id == rhs.id
     }
 }
