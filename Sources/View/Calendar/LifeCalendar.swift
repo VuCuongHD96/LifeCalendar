@@ -54,18 +54,18 @@ public struct LifeCalendar: View {
     
     private func eventRow(event: EventCellData) -> some View {
         EventCell(event: event, opacity: 0.3)
-            .gesture(
+            .highPriorityGesture(
                 LongPressGesture(minimumDuration: 0.2, maximumDistance: 0.5)
                     .onEnded { _ in
                         eventSelected = event
                         eventOffset.reset()
                     }
-                    .sequenced(before: SpatialTapGesture(coordinateSpace: .local))
-                    .simultaneously(with: EventCellDragGesture(eventOffset: $eventOffset)
-                        .onEnded { _ in
-                            updateEventSelected(newLastOffset: eventOffset.lastOffset)
-                        }
-                    )
+            )
+            .simultaneousGesture(
+                EventCellDragGesture(eventOffset: $eventOffset)
+                    .onEnded { _ in
+                        updateEventSelected(newLastOffset: eventOffset.lastOffset)
+                    }
             )
     }
     
