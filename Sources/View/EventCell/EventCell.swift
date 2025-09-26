@@ -17,20 +17,14 @@ struct EventCell: View {
         let eventStartMinute = CGFloat(event.start.adjustToLocalTime().minute)
         let cellHeight: CGFloat = event.hourDueration * TimeManager.lineSpacing + (event.hourDueration - 1) - 1
         
-        Rectangle()
-            .fill(.clear)
+        EventCellInfo(event: event)
+            .frame(height: cellHeight)
             .setupLifeEventBackGroundModifier(
                 param: .init(color: event.color, opacity: opacity)
             )
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .overlay {
-                VStack {
-                    Text(event.name)
-                    Text("start = \(event.start.adjustToLocalTime().hour)")
-                    Text("end   = \(event.end.adjustToLocalTime().hour)")
-                }
-            }
-            .frame(height: cellHeight)
+            .clipShape(
+                RoundedRectangle(cornerRadius: 8)
+            )
             .padding(.top, eventStartHour * TimeManager.lineSpacing + eventStartHour)
             .padding(.top, eventStartMinute)
             .padding(.top, TimeManager.lineHeight)

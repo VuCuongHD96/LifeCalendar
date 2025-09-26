@@ -16,7 +16,7 @@ struct TimeManager {
 
     static func gethourArray() -> [String] {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
+        dateFormatter.dateFormat = "HH:mm"
         var dateComponents = DateComponents()
         let calendar = Calendar.current
         let timeArray = Array(0..<24).compactMap { hour in

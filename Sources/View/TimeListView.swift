@@ -16,24 +16,36 @@ struct TimeListView: View {
     var hourArray: [String]
     
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
             ForEach(hourArray, id: \.self) { hour in
                 ZStack(alignment: .bottom) {
                     timeView(hour: hour)
                         .padding(.bottom, Constant.timeSpacing)
                     Rectangle()
-                        .fill(Color.blue)
+                        .fill(.clear)
                         .frame(width: 10, height: Constant.timeSpacing)
                 }
             }
-            timeView(hour: "12:00 PM")
+            timeView(hour: "24:00")
         }
+        .fixedSize()
     }
     
     private func timeView(hour: String) -> some View {
         Text(hour)
-            .frame(height: TimeManager.timeLabelHeight) 
-            .background(Color.green)
+            .frame(height: TimeManager.timeLabelHeight)
+            .background(
+                Rectangle()
+                    .fill(.blue.opacity(0.4))
+            )
+            .clipShape(
+                .rect(
+                    topLeadingRadius: 0,
+                    bottomLeadingRadius: 0,
+                    bottomTrailingRadius: 4,
+                    topTrailingRadius: 4
+                )
+            )
     }
 }
 

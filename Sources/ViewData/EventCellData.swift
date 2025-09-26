@@ -8,24 +8,38 @@
 import SwiftUI
 
 public struct EventCellData: Identifiable {
-
+    
     public let id: String
-    public let name: String
+    let name: String
+    let description: String
     public var start: Date
     public var end: Date
-    public var selected = false
-    public var color: Color
-    public var hourDueration: TimeInterval {
+    let locationInfo: EventLocationRowViewData?
+    var selected = false
+    let missionRateData: EventMissionRowViewData?
+    var color: Color
+    var hourDueration: TimeInterval {
         (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
     }
     
-    public init(id: String, name: String, start: Date, end: Date, color: Color) {
-        self.id = id
-        self.name = name
-        self.start = start
-        self.end = end
-        self.color = color
-    }
+    public init(
+        id: String,
+        name: String,
+        description: String,
+        start: Date,
+        end: Date,
+        locationInfo: EventLocationRowViewData?,
+        missionRateData: EventMissionRowViewData?,
+        color: Color) {
+            self.id = id
+            self.name = name
+            self.description = description
+            self.start = start
+            self.end = end
+            self.locationInfo = locationInfo
+            self.missionRateData = missionRateData
+            self.color = color
+        }
 }
 
 extension EventCellData: Equatable {
