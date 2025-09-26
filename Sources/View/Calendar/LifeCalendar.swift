@@ -9,13 +9,15 @@ public struct LifeCalendar: View {
     let eventChangedHandler: EventHandler?
     let groupedEvents: [GroupEventViewData]
     
-    @State var eventSelected: EventCellData?
+    @Binding var eventSelected: EventCellData?
     @State var eventOffset: EventOffset = .init()
     
     public init(
+        eventSelected: Binding<EventCellData?>,
         groupedEvents: [GroupEventViewData],
         eventChangedHandler: EventHandler?
     ) {
+        _eventSelected = eventSelected
         self.eventChangedHandler = eventChangedHandler
         self.groupedEvents = groupedEvents
     }

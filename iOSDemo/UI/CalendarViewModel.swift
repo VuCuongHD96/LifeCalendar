@@ -7,6 +7,7 @@
 
 import LifeCalendar
 import Combine
+import Foundation
 
 struct CalendarViewModel: ViewModelType {
     
@@ -18,8 +19,10 @@ struct CalendarViewModel: ViewModelType {
 
 extension CalendarViewModel {
     
-    struct Input {
+    class Input: ObservableObject {
         let eventChangeTrigger = PassthroughSubject<EventCellData, Never>()
+        @Published var eventSelected: EventCellData?
+        @Published var dateSelected: Date = .now
     }
     
     class Output: ObservableObject {
@@ -29,6 +32,12 @@ extension CalendarViewModel {
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
         let output = Output()
+        
+        input.$dateSelected
+            .sink { _ in
+                input.eventSelected = nil
+            }
+            .store(in: cancelBag)
         
         output.$eventList
             .map {
