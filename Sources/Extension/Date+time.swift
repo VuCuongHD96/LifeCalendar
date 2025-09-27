@@ -6,15 +6,17 @@
 //
 
 import Foundation
+import SwiftDate
 
 extension Date {
     
-    public static func setTime(hour: Int, minute: Int = 0, second: Int = 0, timeZone: String = "GMT") -> Self {
+    public static func setTime(day: Int = Date.now.day, hour: Int, minute: Int = 0, second: Int = 0, timeZone: String = "GMT") -> Self {
         let component: Set<Calendar.Component> = [.year, .month, .day, .hour, .minute, .second]
         let calendar = Calendar.current
         var components = calendar.dateComponents(component, from: Self())
         
         components.timeZone = TimeZone(abbreviation: timeZone)
+        components.day = day
         components.hour = hour
         components.minute = minute
         components.second = second
@@ -24,10 +26,5 @@ extension Date {
         } else {
             return .now
         }
-    }
-    
-    func adjustToLocalTime() -> Self {
-        let timeZoneOffset = Double(TimeZone.current.secondsFromGMT(for: self))
-        return self + timeZoneOffset
     }
 }

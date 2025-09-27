@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct EventCell: View {
     
@@ -13,11 +14,23 @@ struct EventCell: View {
     let opacity: Double
     
     var body: some View {
-        let eventStartHour = CGFloat(event.start.adjustToLocalTime().hour)
-        let eventStartMinute = CGFloat(event.start.adjustToLocalTime().minute)
-        let cellHeight: CGFloat = event.hourDueration * TimeManager.lineSpacing + (event.hourDueration - 1) - 1
+        let eventStart = event.start
+        let eventEnd = event.end
+        let startOfToday = Date().dateAtStartOf(.day)
+        let endOfToday = Date().dateAtEndOf(.day)
         
-        EventCellInfo(event: event)
+        let startDateRemake = eventStart < startOfToday ? startOfToday : eventStart
+        let endDateRemake = eventEnd > endOfToday ? endOfToday : eventEnd
+        
+        let eventStartHour = CGFloat(startDateRemake.hour)
+        let eventStartMinute = CGFloat(startDateRemake.minute)
+        let eventEndHour = CGFloat(endDateRemake.hour)
+        
+        let timeAlpha = endDateRemake - startDateRemake
+        let hourAlpha = eventEndHour - eventStartHour - 2
+        let cellHeight = timeAlpha.timeInterval / TimeManager.lineSpacing + hourAlpha
+        
+        return EventCellInfo(event: event)
             .frame(height: cellHeight)
             .setupLifeEventBackGroundModifier(
                 param: .init(color: event.color, opacity: opacity)
