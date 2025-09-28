@@ -18,6 +18,7 @@ struct CalendarView: View {
         VStack {
             CalendarInlineView(dateSelected: $input.dateSelected)
             LifeCalendar(
+                dateSelected: input.dateSelected,
                 eventSelected: $input.eventSelected,
                 groupedEvents: output.groupedEvents,
                 eventChangedHandler: {

@@ -13,7 +13,7 @@ struct CalendarViewModel: ViewModelType {
     
     let event1 = EventCellData(id: "1", name: "event1", description: "description 1", start: .setTime(hour: 17), end: .setTime(hour: 17, minute: 45), locationInfo: nil, missionRateData: .init(isFinished: true, description: "3/3 missions"), color: .green)
     let event2 = EventCellData(id: "2", name: "event2", description: "description 2", start: .setTime(hour: 19), end: .setTime(hour: 21), locationInfo: .init(name: "My Hà Nội", address: "Hà Nội, Việt Nam"), missionRateData: .init(isFinished: false, description: "2/6 missions"), color: .blue)
-    let event3 = EventCellData(id: "3", name: "event3", description: "description 3", start: .setTime(hour: 1), end: .setTime(hour: 3, minute: 0), locationInfo: .init(name: "Apple", address: "One Apple Park Way, Cupertino, California"), missionRateData: .init(isFinished: true, description: "8/8 missions"), color: .pink)
+    let event3 = EventCellData(id: "3", name: "event3", description: "description 3", start: .setTime(day: 26, hour: 23), end: .setTime(day: 27, hour: 3), locationInfo: .init(name: "Apple", address: "One Apple Park Way, Cupertino, California"), missionRateData: .init(isFinished: true, description: "8/8 missions"), color: .pink)
     let event4 = EventCellData(id: "4", name: "event4", description: "", start: .setTime(hour: 4), end: .setTime(hour: 6), locationInfo: .init(name: "Google", address: "Mountain View, California, Hoa Kỳ"), missionRateData: .init(isFinished: false, description: "5/10 missions"), color: .yellow)
 }
 
@@ -53,9 +53,19 @@ extension CalendarViewModel {
             }
             .store(in: cancelBag)
         
-        Just([event1, event2, event3, event4])
-            .assign(to: \.eventList, on: output)
-            .store(in: cancelBag)
+        Publishers.CombineLatest(
+            Just([event1, event2, event3, event4]),
+            input.$dateSelected
+        )
+        .map { array, dateSelected in
+            array.filter {
+                let startOfDateSelected = dateSelected.dateAtStartOf(.day)
+                let endOfDateSelected = dateSelected.dateAtEndOf(.day)
+                return $0.end > startOfDateSelected && $0.start < endOfDateSelected
+            }
+        }
+        .assign(to: \.eventList, on: output)
+        .store(in: cancelBag)
         
         return output
     }

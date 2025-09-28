@@ -6,6 +6,7 @@ import SwiftDate
 
 public struct LifeCalendar: View {
     
+    let dateSelected: Date
     let eventChangedHandler: EventHandler?
     let groupedEvents: [GroupEventViewData]
     
@@ -13,10 +14,12 @@ public struct LifeCalendar: View {
     @State var eventOffset: EventOffset = .init()
     
     public init(
+        dateSelected: Date,
         eventSelected: Binding<EventCellData?>,
         groupedEvents: [GroupEventViewData],
         eventChangedHandler: EventHandler?
     ) {
+        self.dateSelected = dateSelected
         _eventSelected = eventSelected
         self.eventChangedHandler = eventChangedHandler
         self.groupedEvents = groupedEvents
@@ -37,7 +40,7 @@ public struct LifeCalendar: View {
             DashListView(hourArray: TimeManager.gethourArray())
             eventListView
             if let eventSelected {
-                EventCellOverlay(event: eventSelected, eventOffset: $eventOffset)
+                EventCellOverlay(dateSelected: dateSelected, event: eventSelected, eventOffset: $eventOffset)
             }
         }
     }
@@ -55,7 +58,7 @@ public struct LifeCalendar: View {
     }
     
     private func eventRow(event: EventCellData) -> some View {
-        EventCell(event: event, opacity: 0.3)
+        EventCell(dateSelected: dateSelected, event: event, opacity: 0.3)
             .highPriorityGesture(
                 LongPressGesture(minimumDuration: 0.2, maximumDistance: 0.5)
                     .onEnded { _ in
