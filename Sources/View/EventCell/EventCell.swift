@@ -24,7 +24,6 @@ struct EventCell: View {
         let endDateRemake = eventEnd > endOfSelectedDate ? endOfSelectedDate : eventEnd
         
         let eventStartHour = CGFloat(startDateRemake.hour)
-        let eventStartMinute = CGFloat(startDateRemake.minute)
         let eventEndHour = CGFloat(endDateRemake.hour)
         
         let timeAlpha = endDateRemake - startDateRemake
@@ -36,14 +35,12 @@ struct EventCell: View {
         
         return EventCellInfo(event: event)
             .frame(height: cellHeight)
-            .setupLifeEventBackGroundModifier(
-                param: .init(color: event.color, opacity: opacity)
+            .setupEventCellModifier(
+                param: .init(
+                    event: event,
+                    dateSelected: dateSelected,
+                    opacity: opacity
+                )
             )
-            .clipShape(
-                RoundedRectangle(cornerRadius: 8)
-            )
-            .padding(.top, eventStartHour * TimeManager.lineSpacing + eventStartHour)
-            .padding(.top, eventStartMinute)
-            .padding(.top, TimeManager.lineHeight)
     }
 }
