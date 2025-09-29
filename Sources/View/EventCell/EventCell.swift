@@ -15,8 +15,8 @@ struct EventCell: View {
     let opacity: Double
     
     var body: some View {
-        let eventStart = event.start.adjustToLocalTime()
-        let eventEnd = event.end.adjustToLocalTime()
+        let eventStart = event.start
+        let eventEnd = event.end
         let startOfSelectedDate = dateSelected.dateAtStartOf(.day)
         let endOfSelectedDate = dateSelected.dateAtEndOf(.day)
         
@@ -29,7 +29,10 @@ struct EventCell: View {
         
         let timeAlpha = endDateRemake - startDateRemake
         let hourAlpha = eventEndHour - eventStartHour - 2
-        let cellHeight = timeAlpha.timeInterval / TimeManager.lineSpacing + hourAlpha
+        var cellHeight = timeAlpha.timeInterval / TimeManager.lineSpacing + hourAlpha
+        if endOfSelectedDate == endDateRemake {
+            cellHeight += 1
+        }
         
         return EventCellInfo(event: event)
             .frame(height: cellHeight)

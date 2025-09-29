@@ -7,7 +7,7 @@ import SwiftDate
 public struct LifeCalendar: View {
     
     let dateSelected: Date
-    let eventChangedHandler: EventHandler?
+    let eventChangedHandler: EventChangedHandler?
     let groupedEvents: [GroupEventViewData]
     
     @Binding var eventSelected: EventCellData?
@@ -17,7 +17,7 @@ public struct LifeCalendar: View {
         dateSelected: Date,
         eventSelected: Binding<EventCellData?>,
         groupedEvents: [GroupEventViewData],
-        eventChangedHandler: EventHandler?
+        eventChangedHandler: EventChangedHandler?
     ) {
         self.dateSelected = dateSelected
         _eventSelected = eventSelected
@@ -75,16 +75,11 @@ public struct LifeCalendar: View {
     }
     
     private func updateEventSelected(newLastOffset: CGFloat) {
-        if var eventSelected {
+        if let eventSelected {
             let hourChange = Int(newLastOffset / TimeManager.lineSpacing)
             let minuteChange = Int(newLastOffset) - hourChange
-            let oldStartDate = eventSelected.start
-            let newStartDate = oldStartDate + minuteChange.minutes
-            eventSelected.start = newStartDate
-            let oldEndDate = eventSelected.end
-            let newEndDate = oldEndDate + minuteChange.minutes
-            eventSelected.end = newEndDate
-            eventChangedHandler?(eventSelected)
+            let eventChangeInfo = EventChangedInfo(eventID: eventSelected.id, minuteChange: minuteChange)
+            eventChangedHandler?(eventChangeInfo)
         }
         eventSelected = nil
     }
