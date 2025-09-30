@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct EventCellOverlay: View {
     
@@ -16,7 +17,29 @@ struct EventCellOverlay: View {
     @Binding var eventOffset: EventOffset
     
     var body: some View {
-        EventCell(dateSelected: dateSelected, event: event, opacity: 1)
+        let startDate = event.start
+        let endDate = event.end
+        let dateAlpha = endDate - startDate
+        let minuteAlpha: CGFloat = dateAlpha.timeInterval / TimeManager.lineSpacing
+        let hourAlpha: CGFloat = minuteAlpha / TimeManager.lineSpacing - 2
+        let cellHeight: CGFloat = minuteAlpha + hourAlpha
+        let startOfSelectedDate = dateSelected.dateAtStartOf(.day)
+        var minusMinute: CGFloat = 0
+        if startDate < startOfSelectedDate {
+            let minuteDate = startDate - startOfSelectedDate
+            minusMinute = minuteDate.timeInterval / TimeManager.lineSpacing
+        }
+        
+        return EventCellInfo(event: event)
+            .frame(height: cellHeight)
+            .setupEventCellModifier(
+                param: .init(
+                    event: event,
+                    dateSelected: dateSelected,
+                    opacity: 1
+                )
+            )
+            .padding(.top, minusMinute)
             .padding(.top, eventOffset.totalOffset)
             .gesture(
                 EventCellDragGesture(eventOffset: $eventOffset)
