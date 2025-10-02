@@ -22,7 +22,6 @@ extension CalendarViewModel {
     
     class Input: ObservableObject {
         let eventChangeTrigger = PassthroughSubject<EventChangedInfo, Never>()
-        @Published var eventSelected: EventCellData?
         @Published var dateSelected: Date = .now
     }
     
@@ -33,12 +32,6 @@ extension CalendarViewModel {
     
     func transform(_ input: Input, cancelBag: CancelBag) -> Output {
         let output = Output()
-        
-        input.$dateSelected
-            .sink { _ in
-                input.eventSelected = nil
-            }
-            .store(in: cancelBag)
         
         output.$eventList
             .map {
