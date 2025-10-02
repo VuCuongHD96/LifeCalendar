@@ -19,10 +19,11 @@ struct CalendarView: View {
             CalendarInlineView(dateSelected: $input.dateSelected)
             LifeCalendar(
                 dateSelected: input.dateSelected,
-                eventSelected: $input.eventSelected,
                 groupedEvents: output.groupedEvents,
                 eventChangedHandler: {
                     input.eventChangeTrigger.send($0)
+                }, eventOnTap: {
+                    print("--- debug --- eventOnTap = ", $0)
                 }
             )
         }

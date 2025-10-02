@@ -9,20 +9,21 @@ public struct LifeCalendar: View {
     let dateSelected: Date
     let eventChangedHandler: EventChangedHandler?
     let groupedEvents: [GroupEventViewData]
+    let eventOnTap: EventHandler?
     
-    @Binding var eventSelected: EventCellData?
+    @State var eventSelected: EventCellData?
     @State var eventOffset: EventOffset = .init()
     
     public init(
         dateSelected: Date,
-        eventSelected: Binding<EventCellData?>,
         groupedEvents: [GroupEventViewData],
-        eventChangedHandler: EventChangedHandler?
+        eventChangedHandler: EventChangedHandler?,
+        eventOnTap: EventHandler?
     ) {
         self.dateSelected = dateSelected
-        _eventSelected = eventSelected
         self.eventChangedHandler = eventChangedHandler
         self.groupedEvents = groupedEvents
+        self.eventOnTap = eventOnTap
     }
     
     public var body: some View {
@@ -32,6 +33,9 @@ public struct LifeCalendar: View {
                 eventSideView
                     .padding(.top, 10)
             }
+        }
+        .onChange(of: dateSelected) { _, _ in
+            eventSelected = nil
         }
     }
     
@@ -72,6 +76,9 @@ public struct LifeCalendar: View {
                         updateEventSelected(newLastOffset: eventOffset.lastOffset)
                     }
             )
+            .onTapGesture {
+                eventOnTap?(event)
+            }
     }
     
     private func updateEventSelected(newLastOffset: CGFloat) {
