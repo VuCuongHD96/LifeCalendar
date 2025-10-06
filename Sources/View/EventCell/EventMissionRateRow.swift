@@ -7,12 +7,16 @@
 
 import SwiftUI
 
-struct EventMissionRateRow: View {
+public struct EventMissionRateRow: View {
     
     let data: EventMissionRowViewData
     
-    var body: some View {
-        HStack {
+    public init(data: EventMissionRowViewData) {
+        self.data = data
+    }
+    
+    public var body: some View {
+        HStack(spacing: 4) {
             checkView
             Text(data.description)
         }
@@ -23,4 +27,11 @@ struct EventMissionRateRow: View {
             .resizable()
             .frame(width: 12, height: 12)
     }
+}
+
+#Preview {
+    
+    EventMissionRateRow(data: .init(isFinished: true, description: "Description done"))
+    EventMissionRateRow(data: .init(isFinished: false, description: "Description todo"))
+
 }

@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct EventDescriptionRow: View {
+public struct EventDescriptionRow: View {
     
     let description: String
     
-    var body: some View {
+    public init(description: String) {
+        self.description = description
+    }
+    
+    public var body: some View {
         HStack(spacing: 4) {
             Image(systemName: "doc.plaintext")
                 .resizable()
@@ -19,4 +23,9 @@ struct EventDescriptionRow: View {
             Text(description)
         }
     }
+}
+
+#Preview {
+    
+    EventDescriptionRow(description: "Event description")
 }

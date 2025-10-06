@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct EventLocationRow: View {
+public struct EventLocationRow: View {
     
     let eventLocationViewData: EventLocationRowViewData
     
-    var body: some View {
+    public init(eventLocationViewData: EventLocationRowViewData) {
+        self.eventLocationViewData = eventLocationViewData
+    }
+    
+    public var body: some View {
         HStack(spacing: 4) {
             Image(systemName: "mappin.and.ellipse.circle")
                 .resizable()

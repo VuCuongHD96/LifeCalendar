@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-struct EventNameRow: View {
+public struct EventNameRow: View {
     
     let name: String
     
-    var body: some View {
+    public init(name: String) {
+        self.name = name
+    }
+    
+    public var body: some View {
         HStack(spacing: 4) {
             Image(systemName: "text.alignleft")
                 .resizable()
