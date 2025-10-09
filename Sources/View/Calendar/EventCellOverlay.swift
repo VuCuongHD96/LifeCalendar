@@ -15,6 +15,7 @@ struct EventCellOverlay: View {
     let dateSelected: Date
     var event: EventCellData
     @Binding var eventOffset: EventOffset
+    var onEndDrag: VoidHandler?
     
     var body: some View {
         let startDate = event.start
@@ -43,6 +44,9 @@ struct EventCellOverlay: View {
             .padding(.top, eventOffset.totalOffset)
             .gesture(
                 EventCellDragGesture(eventOffset: $eventOffset)
+                    .onEnded { _ in
+                        onEndDrag?()
+                    }
             )
     }
 }
