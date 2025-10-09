@@ -44,7 +44,14 @@ public struct LifeCalendar: View {
             DashListView(hourArray: TimeManager.gethourArray())
             eventListView
             if let eventSelected {
-                EventCellOverlay(dateSelected: dateSelected, event: eventSelected, eventOffset: $eventOffset)
+                EventCellOverlay(
+                    dateSelected: dateSelected,
+                    event: eventSelected,
+                    eventOffset: $eventOffset,
+                    onEndDrag: {
+                        updateEventSelected(newLastOffset: eventOffset.lastOffset)
+                    }
+                )
             }
         }
     }
