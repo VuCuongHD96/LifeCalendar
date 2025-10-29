@@ -15,11 +15,11 @@ struct EventCellInfo: View {
             ForEach(0..<4) { level in
                 VStack(alignment: .leading, spacing: 0) {
                     if level <= 3 {
-                        EventNameRow(name: event.name)
+                        NameRow(name: event.name)
                     }
                     
-                    if let missionRateData = event.missionRateData, level <= 2 {
-                        EventMissionRateRow(data: missionRateData)
+                    if level <= 2 {
+                        DeadlineText(startDate: event.start, endDate: event.end)
                     }
                     
                     if level <= 1, !event.description.isEmpty {
