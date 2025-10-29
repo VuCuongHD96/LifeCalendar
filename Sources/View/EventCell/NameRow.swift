@@ -1,5 +1,5 @@
 //
-//  EventNameRow.swift
+//  NameRow.swift
 //  LifeCalendar
 //
 //  Created by sun on 25/9/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct EventNameRow: View {
+public struct NameRow: View {
     
     let name: String
     
@@ -26,5 +26,5 @@ public struct EventNameRow: View {
 }
 
 #Preview {
-    EventNameRow(name: "Event name")
+    NameRow(name: "Event name")
 }
