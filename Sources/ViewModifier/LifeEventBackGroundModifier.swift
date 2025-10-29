@@ -36,8 +36,7 @@ public struct LifeEventBackGroundModifier: ViewModifier {
                             .frame(height: geo.size.height * progress)
                     }
                     .frame(maxWidth: 5, maxHeight: .infinity, alignment: .bottom)
-                
-                
+
                 Rectangle()
                     .fill(
                         param.color.opacity(param.opacity)

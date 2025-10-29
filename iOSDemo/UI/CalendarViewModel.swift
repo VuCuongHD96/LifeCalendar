@@ -12,10 +12,10 @@ import SwiftDate
 
 struct CalendarViewModel: ViewModelType {
     
-    let event1 = EventCellData(id: "1", name: "event1", description: "description 1", start: .setTime(hour: 7), end: .setTime(hour: 7, minute: 45), locationInfo: nil, missionRateData: .init(isFinished: true, description: "3/3 missions"), color: .green, progress: 0.2)
-    let event2 = EventCellData(id: "2", name: "event2", description: "description 2", start: .setTime(hour: 9), end: .setTime(hour: 11), locationInfo: .init(name: "My Hà Nội", address: "Hà Nội, Việt Nam"), missionRateData: .init(isFinished: false, description: "2/6 missions"), color: .blue, progress: 0.4)
-    let event3 = EventCellData(id: "3", name: "event3", description: "description 3", start: .setTime(day: 26, hour: 23), end: .setTime(day: 27, hour: 3), locationInfo: .init(name: "Apple", address: "One Apple Park Way, Cupertino, California"), missionRateData: .init(isFinished: true, description: "8/8 missions"), color: .pink, progress: 0.6)
-    let event4 = EventCellData(id: "4", name: "event4", description: "", start: .setTime(hour: 2), end: .setTime(hour: 4), locationInfo: .init(name: "Google", address: "Mountain View, California, Hoa Kỳ"), missionRateData: .init(isFinished: false, description: "5/10 missions"), color: .yellow, progress: 0.8)
+    let event1 = EventCellData(id: "1", name: "event1", description: "description 1", start: .setTime(hour: 7), end: .setTime(hour: 7, minute: 45), locationInfo: nil, color: .green, progress: 1)
+    let event2 = EventCellData(id: "2", name: "event2", description: "description 2", start: .setTime(hour: 9), end: .setTime(hour: 11), locationInfo: .init(name: "My Hà Nội", address: "Hà Nội, Việt Nam"), color: .blue, progress: 0.4)
+    let event3 = EventCellData(id: "3", name: "event3", description: "description 3", start: .setTime(day: 26, hour: 23), end: .setTime(day: 27, hour: 3), locationInfo: .init(name: "Apple", address: "One Apple Park Way, Cupertino, California"), color: .pink, progress: 0.6)
+    let event4 = EventCellData(id: "4", name: "event4", description: "", start: .setTime(hour: 2), end: .setTime(hour: 4), locationInfo: .init(name: "Google", address: "Mountain View, California, Hoa Kỳ"), color: .yellow, progress: 0.8)
 }
 
 extension CalendarViewModel {

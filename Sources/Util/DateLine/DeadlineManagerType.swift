@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol DeadlineManagerType {
+public protocol DeadlineManagerType {
     static func calculatorNotSameYear(startDate: Date, endDate: Date) -> String
     static func calculatorSameYear(startDate: Date, endDate: Date) -> String
     static func calculatorSameMonth(startDate: Date, endDate: Date) -> String

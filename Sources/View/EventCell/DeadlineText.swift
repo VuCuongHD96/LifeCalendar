@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-
-struct DeadlineText: View {
+struct DeadlineText<deadlineType: DeadlineManagerType>: View {
     
     let startDate: Date
     let endDate: Date
@@ -18,7 +17,7 @@ struct DeadlineText: View {
             Image(systemName: "clock.badge")
                 .resizable()
                 .frame(width: 12, height: 12)
-            Text(DeadlineShowTimeManager.getDeadLineText(startDate: startDate, endDate: endDate))
+            Text(deadlineType.getDeadLineText(startDate: startDate, endDate: endDate))
         }
     }
 }

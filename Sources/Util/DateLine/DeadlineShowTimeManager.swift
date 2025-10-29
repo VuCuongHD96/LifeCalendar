@@ -8,21 +8,21 @@
 import Foundation
 import SwiftDate
 
-struct DeadlineShowTimeManager: DeadlineManagerType {
+public struct DeadlineShowTimeManager: DeadlineManagerType {
     
-    static func calculatorNotSameYear(startDate: Date, endDate: Date) -> String {
+    public static func calculatorNotSameYear(startDate: Date, endDate: Date) -> String {
         let startDateInfo = "ngày \(startDate.formattedNumericOmittedDate())"
         let endDateInfo = "ngày \(endDate.formattedNumericOmittedDate())"
         return "\(startDateInfo) to \(endDateInfo)"
     }
     
-    static func calculatorSameYear(startDate: Date, endDate: Date) -> String {
+    public static func calculatorSameYear(startDate: Date, endDate: Date) -> String {
         let startDateInfo = "ngày \(startDate.day)/\(startDate.month)"
         let endDateInfo = "ngày \(endDate.day)/\(endDate.month)"
         return "\(startDateInfo) to \(endDateInfo) năm \(startDate.year)"
     }
     
-    static func calculatorSameMonth(startDate: Date, endDate: Date) -> String {
+    public static func calculatorSameMonth(startDate: Date, endDate: Date) -> String {
         let startDateInfo = "\(startDate.getHourMinute()) ngày \(startDate.day)"
         let endDateInfo = "\(endDate.getHourMinute()) ngày \(endDate.day)"
         return "\(startDateInfo) to \(endDateInfo) tháng \(startDate.month)/\(startDate.year)"
@@ -34,7 +34,7 @@ struct DeadlineShowTimeManager: DeadlineManagerType {
         return "\(startDateInfo) to \(endDateInfo) ngày \(startDate.day)/\(startDate.month)/\(startDate.year)"
     }
     
-    static func getDeadLineText(startDate: Date, endDate: Date) -> String {
+    public static func getDeadLineText(startDate: Date, endDate: Date) -> String {
         let startDateLocalTime = startDate.adjustToLocalTime()
         let endDateLocalTime = endDate.adjustToLocalTime()
         switch (startDateLocalTime.year == endDateLocalTime.year,
