@@ -13,6 +13,7 @@ struct EventCellModifier: ViewModifier {
         let event: EventCellData
         let dateSelected: Date
         let opacity: Double
+        let progress: Float
     }
     
     let param: Param
@@ -26,7 +27,7 @@ struct EventCellModifier: ViewModifier {
         
         content
             .setupLifeEventBackGroundModifier(
-                param: .init(color: param.event.color, opacity: param.opacity)
+                param: .init(color: param.event.color, opacity: param.opacity, progress: param.progress)
             )
             .clipShape(
                 RoundedRectangle(cornerRadius: 8)

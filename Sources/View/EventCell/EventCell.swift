@@ -39,7 +39,8 @@ struct EventCell: View {
                 param: .init(
                     event: event,
                     dateSelected: dateSelected,
-                    opacity: opacity
+                    opacity: opacity,
+                    progress: event.progress
                 )
             )
     }
