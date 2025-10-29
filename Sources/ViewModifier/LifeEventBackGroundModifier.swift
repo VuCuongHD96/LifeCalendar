@@ -11,6 +11,8 @@ public struct LifeEventBackGroundModifier: ViewModifier {
     
     let param: Param
     
+    @State private var progress: CGFloat = 0
+    
     public init(param: Param) {
         self.param = param
     }
@@ -23,17 +25,33 @@ public struct LifeEventBackGroundModifier: ViewModifier {
     }
     
     private var backGroundView: some View {
-        HStack(spacing: 0) {
-            Rectangle()
-                .fill(
-                    param.color.opacity(1)
-                )
-                .frame(maxWidth: 5, maxHeight: .infinity)
-            Rectangle()
-                .fill(
-                    param.color.opacity(param.opacity)
-                )
+        GeometryReader { geo in
+            HStack(alignment: .bottom, spacing: 0) {
+                Rectangle()
+                    .fill(
+                        param.color.opacity(param.opacity)
+                    )
+                    .overlay(alignment: .bottom) {
+                        param.color.opacity(1)
+                            .frame(height: geo.size.height * progress)
+                    }
+                    .frame(maxWidth: 5, maxHeight: .infinity, alignment: .bottom)
+                
+                
+                Rectangle()
+                    .fill(
+                        param.color.opacity(param.opacity)
+                    )
+            }
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .leading)
         }
+        .onAppear {
+            progress = CGFloat(param.progress)
+        }
+        .animation(
+            .spring(duration: 2),
+            value: progress
+        )
     }
 }
 

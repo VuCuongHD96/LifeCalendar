@@ -37,7 +37,8 @@ struct EventCellOverlay: View {
                 param: .init(
                     event: event,
                     dateSelected: dateSelected,
-                    opacity: 1
+                    opacity: 1,
+                    progress: event.progress
                 )
             )
             .padding(.top, minusMinute)

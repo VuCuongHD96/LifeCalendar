@@ -5,7 +5,7 @@
 //  Created by sun on 25/9/25.
 //
 
-public struct EventLocationRowViewData {
+public struct EventLocationRowViewData: Equatable {
     
     let name: String
     let address: String

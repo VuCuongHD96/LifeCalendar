@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct EventMissionRowViewData {
+public struct EventMissionRowViewData: Equatable {
     
     let isFinished: Bool
     let description: String

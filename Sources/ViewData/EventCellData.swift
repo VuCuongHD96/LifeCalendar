@@ -21,6 +21,7 @@ public struct EventCellData: Identifiable {
     var hourDueration: TimeInterval {
         (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
     }
+    let progress: Float
     
     public init(
         id: String,
@@ -30,7 +31,8 @@ public struct EventCellData: Identifiable {
         end: Date,
         locationInfo: EventLocationRowViewData?,
         missionRateData: EventMissionRowViewData?,
-        color: Color) {
+        color: Color,
+        progress: Float) {
             self.id = id
             self.name = name
             self.description = description
@@ -39,12 +41,6 @@ public struct EventCellData: Identifiable {
             self.locationInfo = locationInfo
             self.missionRateData = missionRateData
             self.color = color
+            self.progress = progress
         }
-}
-
-extension EventCellData: Equatable {
-    
-    public static func == (lhs: EventCellData, rhs: EventCellData) -> Bool {
-        lhs.id == rhs.id
-    }
 }
