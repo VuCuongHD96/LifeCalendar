@@ -26,29 +26,26 @@ public struct LifeEventBackGroundModifier: ViewModifier {
     
     private var backGroundView: some View {
         GeometryReader { geo in
-            HStack(alignment: .bottom, spacing: 0) {
-                Rectangle()
-                    .fill(
-                        param.color.opacity(param.opacity)
-                    )
-                    .overlay(alignment: .bottom) {
-                        param.color.opacity(1)
-                            .frame(height: geo.size.height * progress)
-                    }
-                    .frame(maxWidth: 5, maxHeight: .infinity, alignment: .bottom)
-
-                Rectangle()
-                    .fill(
-                        param.color.opacity(param.opacity)
-                    )
-            }
-            .frame(width: geo.size.width, height: geo.size.height, alignment: .leading)
+            Rectangle()
+                .fill(
+                    param.color.opacity(param.opacity)
+                )
+                .overlay(alignment: .bottomLeading) {
+                    Rectangle()
+                        .fill(
+                            param.color.opacity(1)
+                        )
+                        .frame(width: 5, height: geo.size.height * progress)
+                }
         }
         .onAppear {
             progress = CGFloat(param.progress)
         }
+        .onChange(of: param.progress) { oldValue, newValue in
+            progress = CGFloat(newValue)
+        }
         .animation(
-            .spring(duration: 2),
+            .smooth(duration: 2),
             value: progress
         )
     }
