@@ -35,19 +35,17 @@ public struct DeadlineShowTimeManager: DeadlineManagerType {
     }
     
     public static func getDeadLineText(startDate: Date, endDate: Date) -> String {
-        let startDateLocalTime = startDate.adjustToLocalTime()
-        let endDateLocalTime = endDate.adjustToLocalTime()
-        switch (startDateLocalTime.year == endDateLocalTime.year,
-                startDateLocalTime.month == endDateLocalTime.month,
-                startDateLocalTime.day == endDateLocalTime.day) {
+        switch (startDate.year == endDate.year,
+                startDate.month == endDate.month,
+                startDate.day == endDate.day) {
         case (true, true, true):
-            return calculatorSameDay(startDate: startDateLocalTime, endDate: endDateLocalTime)
+            return calculatorSameDay(startDate: startDate, endDate: endDate)
         case (true, true, false):
-            return calculatorSameMonth(startDate: startDateLocalTime, endDate: endDateLocalTime)
+            return calculatorSameMonth(startDate: startDate, endDate: endDate)
         case (true, false, _):
-            return calculatorSameYear(startDate: startDateLocalTime, endDate: endDateLocalTime)
+            return calculatorSameYear(startDate: startDate, endDate: endDate)
         default:
-            return calculatorNotSameYear(startDate: startDateLocalTime, endDate: endDateLocalTime)
+            return calculatorNotSameYear(startDate: startDate, endDate: endDate)
         }
     }
 }
