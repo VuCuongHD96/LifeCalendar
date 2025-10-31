@@ -31,11 +31,19 @@ public struct LifeEventBackGroundModifier: ViewModifier {
                     param.color.opacity(param.opacity)
                 )
                 .overlay(alignment: .bottomLeading) {
-                    Rectangle()
-                        .fill(
-                            param.color.opacity(1)
-                        )
-                        .frame(width: 5, height: geo.size.height * progress)
+                    ZStack(alignment: .bottomLeading) {
+                        Rectangle()
+                            .mask(
+                                DiagonalGridView()
+                                    .rotationEffect(.degrees(-45))
+                            )
+                            .frame(width: 5, height: geo.size.height)
+                        Rectangle()
+                            .fill(
+                                param.color.opacity(1)
+                            )
+                            .frame(width: 5, height: geo.size.height * progress)
+                    }
                 }
         }
         .onAppear {
