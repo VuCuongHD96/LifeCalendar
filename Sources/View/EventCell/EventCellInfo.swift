@@ -19,7 +19,7 @@ struct EventCellInfo: View {
                     }
                     
                     if level <= 2 {
-                        DeadlineText<DeadlineShowTimeManager>(startDate: event.start, endDate: event.end)
+                        DeadlineText<DeadlineShowTimeManager>(startDate: event.start, endDate: event.end, isAdjustLocalTime: false)
                     }
                     
                     if level <= 1, !event.description.isEmpty {

@@ -7,17 +7,22 @@
 
 import SwiftUI
 
-struct DeadlineText<deadlineType: DeadlineManagerType>: View {
+public struct DeadlineText<T: DeadlineManagerType>: View {
     
     let startDate: Date
     let endDate: Date
     
-    var body: some View {
+    public init(startDate: Date, endDate: Date, isAdjustLocalTime: Bool = true) {
+        self.startDate = isAdjustLocalTime ? startDate.adjustToLocalTime() : startDate
+        self.endDate = isAdjustLocalTime ? endDate.adjustToLocalTime() : endDate
+    }
+    
+    public var body: some View {
         HStack(spacing: 4) {
             Image(systemName: "clock.badge")
                 .resizable()
                 .frame(width: 12, height: 12)
-            Text(deadlineType.getDeadLineText(startDate: startDate, endDate: endDate))
+            Text(T.getDeadLineText(startDate: startDate, endDate: endDate))
         }
     }
 }
