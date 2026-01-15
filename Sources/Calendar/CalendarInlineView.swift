@@ -10,15 +10,20 @@ import SwiftDate
 
 public struct CalendarInlineView: View {
     
-    @Binding var dateSelected: Date
+    // MARK: Define
+    public typealias DateHandler = (Date) -> Void
+    
+    // MARK: Property
+    @State var dateSelected: Date = .now
     var gridItems = Array.init(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     @State var weekDayList: [Date] = []
     @State var weekdaySymbolList = [String]()
     @Environment(\.locale) var locale
     @State var canReloadDate = false
+    let dateHandler: DateHandler?
     
-    public init(dateSelected: Binding<Date>) {
-        _dateSelected = dateSelected
+    public init(dateHandler: DateHandler?) {
+        self.dateHandler = dateHandler
     }
     
     public var body: some View {
@@ -39,6 +44,7 @@ public struct CalendarInlineView: View {
             weekDayList = CalendarManager.getWeekDateList(from: newValue)
             weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, locale: locale)
             canReloadDate = dateSelected.compare(toDate: Date(), granularity: .day) != .orderedSame
+            dateHandler?(newValue)
         }
     }
     
@@ -101,8 +107,7 @@ public struct CalendarInlineView: View {
 
 #Preview {
     
-    @Previewable
-    @State var dateSelected: Date = .now
-    
-    CalendarInlineView(dateSelected: $dateSelected)
+    CalendarInlineView {
+        print("--- debug --- date selected = ", $0)
+    }
 }

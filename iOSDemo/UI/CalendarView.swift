@@ -16,7 +16,9 @@ struct CalendarView: View {
     
     var body: some View {
         VStack {
-            CalendarInlineView(dateSelected: $input.dateSelected)
+            CalendarInlineView(dateHandler: { date in
+                print("--- debug --- dateHandler = ", date)
+            })
             LifeCalendar(
                 dateSelected: input.dateSelected,
                 groupedEvents: output.groupedEvents,
