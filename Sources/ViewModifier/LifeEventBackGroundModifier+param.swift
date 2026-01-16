@@ -13,9 +13,9 @@ extension LifeEventBackGroundModifier {
         
         let color: Color
         let opacity: Double
-        let progress: Float
+        let progress: Double
         
-        public init(color: Color, opacity: Double, progress: Float) {
+        public init(color: Color, opacity: Double, progress: Double) {
             self.color = color
             self.opacity = opacity
             self.progress = progress

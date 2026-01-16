@@ -13,7 +13,7 @@ struct EventCellModifier: ViewModifier {
         let event: EventCellData
         let dateSelected: Date
         let opacity: Double
-        let progress: Float
+        let progress: Double
     }
     
     let param: Param

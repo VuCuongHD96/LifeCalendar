@@ -20,7 +20,7 @@ public struct EventCellData: Identifiable {
     var hourDueration: TimeInterval {
         (end.timeIntervalSince1970 - start.timeIntervalSince1970) / 3600
     }
-    let progress: Float
+    let progress: Double
     
     public init(
         id: String,
@@ -30,7 +30,7 @@ public struct EventCellData: Identifiable {
         end: Date,
         locationInfo: EventLocationRowViewData?,
         color: Color,
-        progress: Float) {
+        progress: Double) {
             self.id = id
             self.name = name
             self.description = description
