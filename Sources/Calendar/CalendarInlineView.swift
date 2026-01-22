@@ -38,12 +38,12 @@ public struct CalendarInlineView: View {
                 .lineLimit(1)
         }
         .onAppear {
-            dateSelected = .now
+            dateSelected = .now.adjustToLocalTime()
         }
         .onChange(of: dateSelected) { oldValue, newValue in
             weekDayList = CalendarManager.getWeekDateList(from: newValue)
             weekdaySymbolList = CalendarManager.weekdaySymbolsStarting(from: .monday, locale: locale)
-            canReloadDate = dateSelected.compare(toDate: Date(), granularity: .day) != .orderedSame
+            canReloadDate = dateSelected.compare(toDate: Date().adjustToLocalTime(), granularity: .day) != .orderedSame
             dateHandler?(newValue)
         }
     }
