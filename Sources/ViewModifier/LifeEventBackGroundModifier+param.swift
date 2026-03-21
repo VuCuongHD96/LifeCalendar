@@ -5,7 +5,7 @@
 //  Created by sun on 25/9/25.
 //
 
-import SwiftUICore
+import SwiftUI
 
 extension LifeEventBackGroundModifier {
     
