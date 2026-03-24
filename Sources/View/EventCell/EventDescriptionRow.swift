@@ -19,7 +19,7 @@ public struct EventDescriptionRow: View {
         HStack(spacing: 4) {
             Image(systemName: "doc.plaintext")
                 .resizable()
-                .frame(width: 12, height: 12)
+                .frame(width: 16, height: 16)
             Text(description)
         }
     }
