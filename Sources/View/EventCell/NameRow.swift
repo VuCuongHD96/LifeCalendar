@@ -19,7 +19,7 @@ public struct NameRow: View {
         HStack(spacing: 4) {
             Image(systemName: "text.alignleft")
                 .resizable()
-                .frame(width: 12, height: 12)
+                .frame(width: 14, height: 14)
             Text(name)
         }
     }

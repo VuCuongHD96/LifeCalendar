@@ -18,10 +18,10 @@ public struct DeadlineText<T: DeadlineManagerType>: View {
     }
     
     public var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "clock.badge")
+        HStack {
+            Image(systemName: "calendar")
                 .resizable()
-                .frame(width: 12, height: 12)
+                .frame(width: 16, height: 16)
             Text(T.getDeadLineText(startDate: startDate, endDate: endDate))
         }
     }
